@@ -1,0 +1,25 @@
+{% extends 'home/layout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+	<link rel="stylesheet" href="./css/home-index.css">
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <header class="masthead">
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in"> Get True Story {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}{{ user_name }}{% endif %}
+                </div>
+                <div class="intro-heading text-uppercase">
+                    <span class="Text-Pink">Ma</span><span class="Text-White">tcha</span>
+                </div>
+                {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a class="btn btn-getstarted text-uppercase" href="/register">Get started
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+{% endblock %}

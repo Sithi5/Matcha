@@ -1,0 +1,26 @@
+
+.nav-btn-sign-in, .nav-btn-loggout{
+	border-color: rgb(224, 43, 200)!important ;
+	color: rgb(224, 43, 200)!important ;
+}
+
+
+
+.nav-link-pink{
+	color: rgb(66, 66, 66) !important;
+	font-family: 'Montserrat', sans-serif;
+    font-size: .9375rem;
+    font-weight: 600;
+}
+
+.nav-link-pink-first{
+	margin-left: 1rem;
+	color: rgb(66, 66, 66) !important;
+	font-family: 'Montserrat', sans-serif;
+    font-size: .9375rem;
+    font-weight: 600;
+}
+
+.nav-link-pink-first:hover, .nav-link-pink:hover {
+	color: rgb(224, 43, 200) !important;
+}
