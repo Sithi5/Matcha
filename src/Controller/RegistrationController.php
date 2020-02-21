@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 
 class RegistrationController extends AbstractController
 {
@@ -19,6 +21,10 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
+        if (!empty($request) && !empty($request->query->get('fromModal')))
+        {
+            $fromModal = true;
+        }
         if ($this->getUser()) {
             $this->addFlash('notice', 'You are Already logged in.');
             return $this->redirectToRoute('home');
@@ -50,9 +56,16 @@ class RegistrationController extends AbstractController
                 'main' // firewall name in security.yaml
             );
         }
-
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
+        if ($fromModal === true)
+        {
+            return $this->render('registration/registerFromModal.html.twig', [
+                'registrationForm' => $form->createView(),
+            ]);
+        }
+        else {
+            return $this->render('registration/register.html.twig', [
+                'registrationForm' => $form->createView(),
+            ]);
+        }
     }
 }

@@ -1,0 +1,33 @@
+
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="background-color: pink">
+            <h1>Register</h1>
+        {{ form_start(registrationForm) }}
+            {% if not form_errors(registrationForm) is empty %}
+                <div class="alert alert-danger">
+                    <a class="alert-link"> {{ form_errors(registrationForm) }}</a>
+                </div>
+            {% endif %}
+            {{ form_row(registrationForm.username) }}
+            {{ form_row(registrationForm.gender) }}
+            {{ form_row(registrationForm.mail) }}
+            {{ form_row(registrationForm.birthdate) }}
+            {{ form_row(registrationForm.plainPassword) }}
+            {# {{ form_row(registrationForm.agreeTerms) }} #}
+            <button class="btn">Register</button>
+        {{ form_end(registrationForm) }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+</div>
