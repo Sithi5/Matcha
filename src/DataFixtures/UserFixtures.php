@@ -26,6 +26,9 @@ class UserFixtures extends Fixture
         $user = new User();
         $user->setUsername('root');
         $user->setRoles(['ROLE_ADMIN']);
+        $user->setMail("ma.sithis@gmail.com");
+        $user->setBirthDate(new \DateTime('1995-12-21'));
+        $user->setGender('Male');
         $manager->persist($user);
         $password="root";
 

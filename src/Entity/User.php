@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
+ * @UniqueEntity(fields={"mail"}, message="There is already an account with this e-mail address")
  */
 class User implements UserInterface
 {
@@ -34,6 +35,21 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $mail;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $Gender;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $BirthDate;
 
     public function getId(): ?int
     {
@@ -106,5 +122,41 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getMail(): ?string
+    {
+        return $this->mail;
+    }
+
+    public function setMail(string $mail): self
+    {
+        $this->mail = $mail;
+
+        return $this;
+    }
+
+    public function getGender(): ?string
+    {
+        return $this->Gender;
+    }
+
+    public function setGender(string $Gender): self
+    {
+        $this->Gender = $Gender;
+
+        return $this;
+    }
+
+    public function getBirthDate(): ?\DateTimeInterface
+    {
+        return $this->BirthDate;
+    }
+
+    public function setBirthDate(\DateTimeInterface $BirthDate): self
+    {
+        $this->BirthDate = $BirthDate;
+
+        return $this;
     }
 }
