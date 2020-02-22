@@ -9,14 +9,13 @@
         </button>
       </div>
       <div class="modal-body" style="background-color: pink">
-            <h1>Register</h1>
         {{ form_start(registrationForm) }}
             {% if not form_errors(registrationForm) is empty %}
                 <div class="alert alert-danger">
                     <a class="alert-link"> {{ form_errors(registrationForm) }}</a>
                 </div>
             {% endif %}
-            {{ form_row(registrationForm.username) }}
+            {{ form_row(registrationForm.username, {'name': 'Your name'}) }}
             {{ form_row(registrationForm.gender) }}
             {{ form_row(registrationForm.mail) }}
             {{ form_row(registrationForm.birthdate) }}

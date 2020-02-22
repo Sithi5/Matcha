@@ -16,13 +16,16 @@
                     <span class="Text-Pink">Ma</span><span class="Text-White">tcha</span>
                 </div>
                 {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <button type="button" class="btn btn-getstarted text-uppercase" data-toggle="modal" data-target="#GetStartedModal">Get started
+                    <a type="button" class="btn btn-getstarted text-uppercase" href="{{ path('app_register')}}" >Get started
+                    </a>
+                    {# this part is for modal register, not done yet #}
+                    {# <button type="button" class="btn btn-getstarted text-uppercase" data-toggle="modal" data-target="#GetStartedModal">Get started
                     </button>
                     <!-- Modal -->
                     <div class="modal fade" id="GetStartedModal" tabindex="-1" role="dialog" aria-labelledby="GetStartedModal" aria-hidden="true">
                         {{ render(controller('App\\Controller\\RegistrationController::register', {}, {'fromModal': true})) }}
                     </div>
-                    <!-- Modal -->
+                    <!-- Modal --> #}
                 {% endif %}
             </div>
         </div>

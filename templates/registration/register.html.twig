@@ -1,28 +1,68 @@
 {% extends 'layout.html.twig' %}
 
 {% block title %}Register{% endblock %}
+{% block stylesheets %}{{ parent() }}<link rel="stylesheet" href="./css/register.css"> {%endblock %}
 
 {% block body %}
 	{#navbar #}
 	{{ include("navbar/navbar.html.twig") }}
 	{#navbar #}
-    <h1>Register</h1>
+<div class="container register-form">
+            <div class="form">
+                <div class="note">
+                    <p>This is a simpleRegister Form made using Boostrap.</p>
+                </div>
+                 <div class="form-content">
+                     {{ form_start(registrationForm) }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {{ form_widget(registrationForm.username, {'attr': {'placeholder': 'Your name *', 'label': 'Your name', 'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+                            </div>
+                            <div class="form-group">
+                                {{ form_widget(registrationForm.gender, {'attr': {'placeholder': 'Your Gender *', 'label': 'Your Gender', 'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_widget(registrationForm.mail, {'attr': {'placeholder': 'Your mail *', 'label': 'Your mail', 'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(registrationForm.birthdate) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(registrationForm.plainPassword) }}
+                            </div>
+                        </div>
+                    </div>
+                <button class="btnSubmit">Register</button>
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
 
-    {{ form_start(registrationForm) }}
 
-        {% if not form_errors(registrationForm) is empty %}
+        {# {% if not form_errors(registrationForm) is empty %}
             <div class="alert alert-danger">
                 <a class="alert-link"> {{ form_errors(registrationForm) }}</a>
             </div>
-        {% endif %}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.gender) }}
-        {{ form_row(registrationForm.mail) }}
-        {{ form_row(registrationForm.birthdate) }}
-        {{ form_row(registrationForm.plainPassword) }}
+        {% endif %} #}
+
+
+
 
         {# {{ form_row(registrationForm.agreeTerms) }} #}
 
-        <button class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    $(document).ready(function() {
+        // you may need to change this code if you are not using Bootstrap Datepicker
+        $('.js-datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+    </script>
 {% endblock %}

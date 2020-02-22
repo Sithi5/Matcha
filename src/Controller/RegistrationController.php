@@ -25,6 +25,9 @@ class RegistrationController extends AbstractController
         {
             $fromModal = true;
         }
+        else {
+            $fromModal = false;
+        }
         if ($this->getUser()) {
             $this->addFlash('notice', 'You are Already logged in.');
             return $this->redirectToRoute('home');

@@ -22,7 +22,8 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
+            ->add('username', TextType::class, [
+            ])
             // ->add('agreeTerms', CheckboxType::class, [
             //     'mapped' => false,
             //     'constraints' => [
@@ -39,11 +40,9 @@ class RegistrationFormType extends AbstractType
                 ]
             ])
             ->add('birthdate', DateType::class,[
-                'placeholder' => [
-                    'year' => 'Year',
-                    'month' => 'Month',
-                    'day' => 'Day',
-                ]
+                'widget' => 'single_text',
+                'html5' => 'false',
+                'attr' => ['class' => 'js-datepicker'],
             ])
             ->add('mail', TextType::class)
             ->add('plainPassword', PasswordType::class, [
