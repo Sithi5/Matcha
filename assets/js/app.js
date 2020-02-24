@@ -1,13 +1,23 @@
 // app.js
 
-const $ = require('jquery');
-// this "modifies" the jquery module: adding behavior to it
-// the bootstrap module doesn't export/return anything
-require('bootstrap');
+require('../css/app.scss');
 
-// or you can include specific pieces
-// require('bootstrap/js/dist/tooltip');
-// require('bootstrap/js/dist/popover');
+// loads the jquery package from node_modules
+require('webpack-jquery-ui')
+var $ = require('jquery');
+global.$ = global.jQuery = $;
+
+// loads the bootstrap package from node_modules
+require('bootstrap');
+require('popper.js');
+
+
+require('../css/home-index.css');
+require('../css/navbar.css');
+require('../css/register.css');
+
+
+
 
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();

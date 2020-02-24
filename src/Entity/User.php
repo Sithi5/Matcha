@@ -44,12 +44,17 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $Gender;
+    private $gender;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $BirthDate;
+    private $birthdate;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $lastname;
 
     public function getId(): ?int
     {
@@ -138,24 +143,36 @@ class User implements UserInterface
 
     public function getGender(): ?string
     {
-        return $this->Gender;
+        return $this->gender;
     }
 
-    public function setGender(string $Gender): self
+    public function setGender(string $gender): self
     {
-        $this->Gender = $Gender;
+        $this->gender = $gender;
 
         return $this;
     }
 
-    public function getBirthDate(): ?\DateTimeInterface
+    public function getBirthdate(): ?\DateTimeInterface
     {
-        return $this->BirthDate;
+        return $this->birthdate;
     }
 
-    public function setBirthDate(\DateTimeInterface $BirthDate): self
+    public function setBirthdate(\DateTimeInterface $birthdate): self
     {
-        $this->BirthDate = $BirthDate;
+        $this->birthdate = $birthdate;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): self
+    {
+        $this->lastname = $lastname;
 
         return $this;
     }

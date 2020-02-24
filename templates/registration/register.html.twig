@@ -1,68 +1,94 @@
 {% extends 'layout.html.twig' %}
 
 {% block title %}Register{% endblock %}
-{% block stylesheets %}{{ parent() }}<link rel="stylesheet" href="./css/register.css"> {%endblock %}
-
 {% block body %}
 	{#navbar #}
 	{{ include("navbar/navbar.html.twig") }}
 	{#navbar #}
-<div class="container register-form">
-            <div class="form">
-                <div class="note">
-                    <p>This is a simpleRegister Form made using Boostrap.</p>
-                </div>
-                 <div class="form-content">
-                     {{ form_start(registrationForm) }}
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                {{ form_widget(registrationForm.username, {'attr': {'placeholder': 'Your name *', 'label': 'Your name', 'class': 'form-control'}}) }}
+    <div class="container register-form">
+        <div class="card">
+            <h5 class="card-header info-color white-text text-center py-4">
+                <strong> Tell us about you </strong>
+            </h5>
+
+            <!-- card content -->
+            <div class="card-body px-lg-5 pt-0">
+                <form class="text-center" style="color: #757575;" action="#!">
+                    {{ form_start(registrationForm) }}
+                        <!-- username -->
+                        <div class="form-row">
+                            <div class="col">
+                                <!-- first name -->
+                                <div class="form-part">
+                                    {{ form_widget(registrationForm.username, {'attr': {'type': 'text', 'class': 'form-control'}}) }}
+                                    <label for="registration_form_username" class>First name</label>
+                                </div>
                             </div>
-                            <div class="form-group">
-                            </div>
-                            <div class="form-group">
-                                {{ form_widget(registrationForm.gender, {'attr': {'placeholder': 'Your Gender *', 'label': 'Your Gender', 'class': 'form-control'}}) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_widget(registrationForm.mail, {'attr': {'placeholder': 'Your mail *', 'label': 'Your mail', 'class': 'form-control'}}) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_row(registrationForm.birthdate) }}
-                            </div>
-                            <div class="form-group">
-                                {{ form_row(registrationForm.plainPassword) }}
+                            <div class="col">
+                                <!-- Last name -->
+                                <div class="form-part">
+                                    {{ form_widget(registrationForm.lastname, {'attr': {'class': 'form-control'}}) }}
+                                    <label for="registration_form_lastname">Last name</label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                <button class="btnSubmit">Register</button>
-                {{ form_end(registrationForm) }}
-            </div>
+
+                        <!-- E-mail -->
+                        <div class="form-part">
+                            {{ form_widget(registrationForm.mail, {'attr': {'class': 'form-control'}}) }}
+                            <label for="registration_form_mail">E-mail</label>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-margin">
+                            <div class="form-part">
+                                {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                                <label for="registration_form_plainPassword">Your password</label>
+                                <small id="materialRegisterFormPasswordHelpBlock" class="form-text text-muted small-password">
+                                    At least 8 characters and 1 digit
+                                </small>
+                            </div>
+                        </div>
+
+                            <div class="form-part">
+                                {{ form_widget(registrationForm.confirmPlainPassword, {'attr': {'class': 'form-control'}}) }}
+                                <label for="registration_form_confirmPlainPassword">Confirm password</label>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="form-part form-gender">
+                                <label for="registration_form_gender">Your gender</label>
+                                {{ form_widget(registrationForm.gender, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+
+                            <div class="form-part form-birthdate">
+                                {{ form_row(registrationForm.birthdate) }}
+                            </div>
+
+                        <div class="form-margin">
+                            <button class="btnSubmit">Register</button>
+                        </div>
+
+                    {{ form_end(registrationForm) }}
+                </form>
+            </div
         </div>
-
-
-        {# {% if not form_errors(registrationForm) is empty %}
-            <div class="alert alert-danger">
-                <a class="alert-link"> {{ form_errors(registrationForm) }}</a>
-            </div>
-        {% endif %} #}
-
-
-
+    </div>
 
         {# {{ form_row(registrationForm.agreeTerms) }} #}
 
+    {% block javascripts %}
+     {{parent()}}
+     <script src="https://unpkg.com/jquery-dropdown-datepicker"></script>
+            <script>
+            $(document).ready(function() {
+                 $('.js-dropdown-datepicker').dropdownDatepicker({
+                    submitFormat: 'yyyy-mm-dd',
+                    minAge: 18,
+                });
+            });
+        </script>
+    {% endblock %}
 
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-    $(document).ready(function() {
-        // you may need to change this code if you are not using Bootstrap Datepicker
-        $('.js-datepicker').datepicker({
-            format: 'yyyy-mm-dd'
-        });
-    });
-    </script>
-{% endblock %}
