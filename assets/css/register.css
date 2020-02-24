@@ -77,7 +77,7 @@ select, input{
 
   input + label {
     position: absolute;
-    left: 25px;
+    left: 40px;
     top: 13%;
     transition: transform 200ms ease;
 
@@ -94,6 +94,22 @@ select, input{
     transform: translateY(-200%);
   }
 
+.force-label-top{
+    position: absolute;
+    left: 40px;
+    top: 13%;
+    transition: transform 200ms ease;
+
+    /* You have to use this to make it clickable through*/
+    pointer-events: none;
+
+    font-size: 0.7em;
+    font-weight: 400;
+
+    /* Use "Translate" function instead of classic positioning for better performance */
+    transform: translateY(-200%);
+}
+
 
   /* date picker */
 
@@ -105,3 +121,10 @@ select, input{
     border-radius: .5rem;
     border-color: rgb(209, 186, 204);
   }
+
+
+  /*form error*/
+
+.form-error{
+    color: red;
+}

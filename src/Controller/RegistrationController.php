@@ -59,6 +59,7 @@ class RegistrationController extends AbstractController
                 'main' // firewall name in security.yaml
             );
         }
+
         if ($fromModal === true)
         {
             return $this->render('registration/registerFromModal.html.twig', [
@@ -71,4 +72,62 @@ class RegistrationController extends AbstractController
             ]);
         }
     }
+
+        /**
+     * @Route("/edituser", name="app_edituser")
+     */
+    public function editUser(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+    {
+        if (!empty($request) && !empty($request->query->get('fromModal')))
+        {
+            $fromModal = true;
+        }
+        else {
+            $fromModal = false;
+        }
+        if (($user = $this->getUser())) {
+            $form = $this->createForm(RegistrationFormType::class, $user);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                // encode the plain password
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                // do anything else you need here, like send an email
+
+                return $guardHandler->authenticateUserAndHandleSuccess(
+                    $user,
+                    $request,
+                    $authenticator,
+                    'main' // firewall name in security.yaml
+                );
+            }
+
+            if ($fromModal === true)
+            {
+                return $this->render('registration/registerFromModal.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
+            }
+            else {
+                return $this->render('registration/register.html.twig', [
+                    'registrationForm' => $form->createView(),
+                ]);
+            }
+        }
+        else {
+            $this->addFlash('notice', 'You can\'t edit your profile');
+            return $this->redirectToRoute('home');
+        }
+    }
+
 }
