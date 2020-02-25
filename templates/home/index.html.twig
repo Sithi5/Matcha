@@ -14,10 +14,18 @@
           <span class="Text-Pink">Ma</span><span class="Text-White">tcha</span>
         </div>
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-          <a href="{{ path('app_register') }}"
-            class="btn btn-getstarted text-uppercase">
-            Get started
-          </a>
+          <!-- Bouton servant à activer la modale -->
+<a data-target="{{ path('app_register_from_modal') }}" data-tooltip="voir"
+   class="modal-trigger btn btnSubmit right-align">inscription</a>
+
+            <!-- Structure de la modale -->
+<div id="modal1" class="modal fade">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+    </div>
+  </div>
+</div>
         {% endif %}
       </div>
     </div>

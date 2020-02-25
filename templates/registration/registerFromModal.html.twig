@@ -1,0 +1,19 @@
+    {{ form_start(registrationform, {'attr': {'id': 'modal_form_register'}, 'action': path('app_register_from_modal')}) }}
+    {{ form_widget(registrationform) }}
+	<button id="buttonsubmit" type="submit" class="register-button btn btnSubmit right-align">Register</button>
+    {{ form_end(registrationform) }}
+
+
+<script>
+$('#modal_form_register').submit(function(){
+    $.ajax({
+      url: $('#modal_form_register').attr('action'),
+      type: 'POST',
+      data : $('#modal_form_register').serialize(),
+      success: function(data){
+        $('.modal-content').html(data);
+      }
+    });
+    return false;
+});
+</script>

@@ -21,13 +21,6 @@ class RegistrationController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
-        if (!empty($request) && !empty($request->query->get('fromModal')))
-        {
-            $fromModal = true;
-        }
-        else {
-            $fromModal = false;
-        }
         if ($this->getUser()) {
             $this->addFlash('notice', 'You are Already logged in.');
             return $this->redirectToRoute('home');
@@ -60,18 +53,37 @@ class RegistrationController extends AbstractController
             );
         }
 
-        if ($fromModal === true)
-        {
-            return $this->render('registration/registerFromModal.html.twig', [
-                'registrationForm' => $form->createView(),
-            ]);
-        }
-        else {
-            return $this->render('registration/register.html.twig', [
-                'registrationForm' => $form->createView(),
-            ]);
-        }
+        return $this->render('registration/register.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
     }
+
+    /**
+     * @Route("/registerfrommodal", name="app_register_from_modal")
+     */
+    public function registerFromModal(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+    {
+        $user = new User();
+        $form = $this->createForm(RegistrationFormType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($inscrit);
+            $em->flush();
+            $request->getSession()->getFlashbag()->add('success', 'Votre inscription a été enregistré.');
+            return $this->redirectToRoute('home');
+        }
+        return $this->render(
+            'registration/registerFromModal.html.twig', array('registrationform' => $form->createView())
+        );
+    }
+
+
+
+
+
 
         /**
      * @Route("/edituser", name="app_edituser")
