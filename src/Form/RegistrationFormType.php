@@ -122,7 +122,6 @@ class RegistrationFormType extends AbstractType
                     new Type(\DateTime::class),
                 ],
             ])
-            ->add('register', SubmitType::class)
         ;
     }
 

@@ -22,7 +22,6 @@ require('../css/register.css');
 //my personnal js
 require('./register.js')
 
-
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 });
