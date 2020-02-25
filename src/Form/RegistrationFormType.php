@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,6 +24,7 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class RegistrationFormType extends AbstractType
 {
@@ -73,6 +75,9 @@ class RegistrationFormType extends AbstractType
                         'maxMessage' => 'Your email should be maximum {{ limit }} characters',
 
                     ]),
+                    new Assert\Email([
+                         'message' => "The email '{{ value }}' is not a valid email."
+                    ]),
                 ],
             ])
             ->add('plainPassword', RepeatedType::class, [
@@ -91,6 +96,7 @@ class RegistrationFormType extends AbstractType
                         'max' => 50,
                         'maxMessage' => 'Your password should be maximum {{ limit }} characters',
                     ]),
+
                 ],
                 'invalid_message' => 'Passwords don\'t match'
             ])
@@ -106,7 +112,7 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'widget' => 'single_text',
                 'html5' => 'false',
-                'attr' => ['class' => 'js-dropdown-datepicker'],
+                'attr' => ['class' => 'birthdate-dropdown'],
                 'label' => 'Your birthdate',
                 'label_attr' => ['id' => 'label-birthdate'],
                 'constraints' => [
@@ -116,6 +122,7 @@ class RegistrationFormType extends AbstractType
                     new Type(\DateTime::class),
                 ],
             ])
+            ->add('register', SubmitType::class)
         ;
     }
 

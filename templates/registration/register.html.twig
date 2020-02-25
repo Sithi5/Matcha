@@ -79,16 +79,15 @@
                             </div>
                         </div>
 
-
                         {# Birthday #}
                         <div class="form-part form-birthdate">
-                            {{ form_row(registrationForm.birthdate) }}
+                            {{ form_widget(registrationForm.birthdate) }}
                             <div class="form-error">
                                 {{ form_errors(registrationForm.birthdate) }}
                             </div>
                         </div>
                         <div class="form-margin">
-                            <button class="btnSubmit">Register</button>
+                            {{ form_row(registrationForm.register, {'attr': {'class': 'btnSubmit'}}) }}
                         </div>
 
                     {{ form_end(registrationForm) }}
@@ -96,35 +95,5 @@
             </div>
         </div>
     </div>
-
-        {# {{ form_row(registrationForm.agreeTerms) }} #}
-
-    {% block javascripts %}
-        {{parent()}}
-        <script src="https://unpkg.com/jquery-dropdown-datepicker"></script>
-        <script>
-            $(document).ready(function() {
-                $('.js-dropdown-datepicker').dropdownDatepicker({
-                    submitFormat: 'yyyy-mm-dd',
-                    minAge: 18,
-                });
-            })
-            //script removing label when something inside field
-            $('.label-float :input').blur(function(){
-                if($(this).val() ) {
-                    $(this).labels().addClass('force-label-top');
-                }
-                else if(!$(this).val() ) {
-                    $(this).labels().removeClass('force-label-top');
-                }
-            })
-            $(".label-float :input").each(function(){
-                if($(this).val().length != 0) {
-                    $(this).labels().addClass('force-label-top');
-                }
-            })
-        </script>
-    {% endblock %}
-
 {% endblock %}
 

@@ -35,12 +35,6 @@
     color: #fff;
 }
 
-.js-dropdown-datepicker{
-    display: none !important;
-}
-
-
-
 .info-color{
     background-color: rgb(224, 43, 200) !important;
 }
@@ -112,11 +106,14 @@ select, input{
 
 
   /* date picker */
+  .date-dropdowns input{
+      display: none;
+  }
 
-  select.year, select.month, select.day{
+  .date-dropdowns select.year, .date-dropdowns select.month, .date-dropdowns select.day{
     color: rgb(224, 43, 200);
     margin-right: 2%;
-    margin-top: 0;
+    margin-top: 2%;
     padding: .5rem;
     border-radius: .5rem;
     border-color: rgb(209, 186, 204);
