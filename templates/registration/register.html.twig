@@ -15,11 +15,8 @@
           <strong>Tell us about you</strong>
         </h5>
         <div class="card-body px-lg-5 pt-0">
-          {{ form_start(registrationForm) }}
-          {{ include('registration/registerCardContent.html.twig') }}
-          <div class="form-margin">
-            <button class="btnSubmit">Register</button>
-          </div>
+          {{ form_start(registrationForm, {'attr': {'id': 'modal_form_register'}, 'action': path('app_register')}) }}
+            {{ include('registration/registerCardContent.html.twig') }}
           {{ form_end(registrationForm) }}
         </div>
       </div>

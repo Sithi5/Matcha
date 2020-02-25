@@ -122,6 +122,13 @@ class RegistrationFormType extends AbstractType
                     new Type(\DateTime::class),
                 ],
             ])
+            ->add('submit', SubmitType::class,[
+                'attr' => [
+                    'id' => 'buttonsubmit',
+                    'type' => 'submit',
+                    'class' => 'register-button btn btnSubmit right-align',
+                ]
+            ])
         ;
     }
 

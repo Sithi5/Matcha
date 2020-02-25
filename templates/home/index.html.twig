@@ -15,8 +15,8 @@
         </div>
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
           <!-- Bouton servant à activer la modale -->
-<a data-target="{{ path('app_register_from_modal') }}" data-tooltip="voir"
-   class="modal-trigger btn btnSubmit right-align">inscription</a>
+<a data-target="{{ path('app_register') }}" data-tooltip="voir"
+   class="modal-trigger btn btnSubmit right-align">Register</a>
 
             <!-- Structure de la modale -->
 <div id="modal1" class="modal fade">
@@ -30,8 +30,4 @@
       </div>
     </div>
   </header>
-{% endblock %}
-
-{% block javascripts %}
-  {{ parent() }}
 {% endblock %}

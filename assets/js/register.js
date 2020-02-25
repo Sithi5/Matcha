@@ -44,3 +44,17 @@ $(document).ready(function() {
         });
     })
 });
+
+
+
+$('#modal_form_register').submit(function() {
+    $.ajax({
+        url: $('#modal_form_register').attr('action'),
+        type: 'POST',
+        data: $('#modal_form_register').serialize(),
+        success: function(data) {
+            $('.modal-content').html(data);
+        }
+    });
+    return false;
+});

@@ -59,33 +59,6 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/registerfrommodal", name="app_register_from_modal")
-     */
-    public function registerFromModal(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
-    {
-        $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($inscrit);
-            $em->flush();
-            $request->getSession()->getFlashbag()->add('success', 'Votre inscription a été enregistré.');
-            return $this->redirectToRoute('home');
-        }
-        return $this->render(
-            'registration/registerFromModal.html.twig', array('registrationform' => $form->createView())
-        );
-    }
-
-
-
-
-
-
-        /**
      * @Route("/edituser", name="app_edituser")
      */
     public function editUser(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
