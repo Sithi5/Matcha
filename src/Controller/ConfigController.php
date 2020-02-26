@@ -205,12 +205,4 @@ class ConfigController extends AbstractController
         }
         throw new NotFoundHttpException('No route found for "GET /config/droptable/'.$password.'"');
     }
-
-
-    /**
-     * @Route("/yarne/{password}", name="yarn_encore_dev", requirements={"password"="\d+"})
-     */
-    public function YarnEnDev(KernelInterface $kernel, int $password)
-    {
-    }
 }
