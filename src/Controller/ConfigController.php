@@ -198,6 +198,26 @@ class ConfigController extends AbstractController
     }
 
     /**
+     * @Route("/gitbranch/{password}", name="git_branch", requirements={"password"="\d+"})
+     */
+    public function GitBranch(KernelInterface $kernel, int $password)
+    {
+        $dotenv = new Dotenv();
+        $dotenv->load(__DIR__ . '/.env');
+
+        if ((int) $password == $_ENV['PASSWORD']) {
+
+            $content = \shell_exec('git branch');
+            return $this->render('config/config.html.twig', [
+                'content' => $content,
+            ]);
+        }
+
+        throw new NotFoundHttpException('No route found for "GET /config/gitbrasdsadanch/' . $password . '"');
+    }
+
+
+    /**
      * @Route("/gitcommand/{command}/{password}", name="git_command", requirements={"password"="\d+"})
      */
     public function GitCommand(KernelInterface $kernel, string $command, int $password)
