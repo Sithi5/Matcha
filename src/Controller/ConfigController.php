@@ -189,7 +189,7 @@ class ConfigController extends AbstractController
 
         if ((int) $password == $_ENV['PASSWORD']) {
 
-            $content = \shell_exec('git pull');
+            $content = \shell_exec('cd ../; git pull');
             return $this->render('config/config.html.twig', [
                 'content' => $content,
             ]);
