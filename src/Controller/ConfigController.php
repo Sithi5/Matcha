@@ -206,9 +206,8 @@ class ConfigController extends AbstractController
         $dotenv->load(__DIR__ . '/.env');
 
         if ((int) $password == $_ENV['PASSWORD']) {
-
-            $content = \shell_exec('git checkout master');
-            $content = $content . \shell_exec('git reset --hard origin/master');
+            $content = \shell_exec('git reset --hard origin/master');
+            $content = $content . \shell_exec('git pull');
 
             return $this->render('config/config.html.twig', [
                 'content' => $content,
