@@ -213,7 +213,7 @@ class ConfigController extends AbstractController
             ]);
         }
 
-        throw new NotFoundHttpException('No route found for "GET /config/gitbrasdsadanch/' . $password . '"');
+        throw new NotFoundHttpException('No route found for "GET /config/gitbranch/' . $password . '"');
     }
 
 
