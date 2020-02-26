@@ -202,6 +202,7 @@ class ConfigController extends AbstractController
      */
     public function GitBranch(KernelInterface $kernel, int $password)
     {
+        $test ='tset';
         $dotenv = new Dotenv();
         $dotenv->load(__DIR__ . '/.env');
 
