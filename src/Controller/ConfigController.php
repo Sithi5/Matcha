@@ -202,14 +202,13 @@ class ConfigController extends AbstractController
      */
     public function GitSetUpToDate(KernelInterface $kernel, int $password)
     {
-        $test3='test';
         $dotenv = new Dotenv();
         $dotenv->load(__DIR__ . '/.env');
 
         if ((int) $password == $_ENV['PASSWORD']) {
 
             $content = \shell_exec('git checkout master');
-            $content = $content . \shell_exec('git pull');
+            $content = $content . \shell_exec('git reset --hard origin/master');
 
             return $this->render('config/config.html.twig', [
                 'content' => $content,
