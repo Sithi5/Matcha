@@ -11,21 +11,7 @@
           <span class="Text-Pink">Ma</span><span class="Text-White">tcha</span>
         </div>
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-          <!-- Bouton servant à activer la modale -->
-          <button type="button" class="btn btn-primary btnSubmit" data-toggle="modal" data-target="#modal-register">
-            Register
-          </button>
-          <!-- Structure de la modale -->
-          <div id="modal-register" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                {{ render(controller('App\\Controller\\RegistrationController::register', {
-                    'fromModal': true,
-                  }
-                )) }}
-              </div>
-            </div>
-          </div>
+
         {% endif %}
       </div>
     </div>
