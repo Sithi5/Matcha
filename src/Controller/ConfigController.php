@@ -198,11 +198,31 @@ class ConfigController extends AbstractController
     }
 
     /**
+     * @Route("/gitsetuptodate/{password}", name="git_set_up_to_date", requirements={"password"="\d+"})
+     */
+    public function GitSetUpToDate(KernelInterface $kernel, int $password)
+    {
+        $test3='test';
+        $dotenv = new Dotenv();
+        $dotenv->load(__DIR__ . '/.env');
+
+        if ((int) $password == $_ENV['PASSWORD']) {
+
+            $content = \shell_exec('git checkout master');
+            $content = $content . \shell_exec('git pull');
+
+            return $this->render('config/config.html.twig', [
+                'content' => $content,
+            ]);
+        }
+        throw new NotFoundHttpException('No route found for "GET /config/gitpull/' . $password . '"');
+    }
+
+    /**
      * @Route("/gitbranch/{password}", name="git_branch", requirements={"password"="\d+"})
      */
     public function GitBranch(KernelInterface $kernel, int $password)
     {
-        $test ='tset';
         $dotenv = new Dotenv();
         $dotenv->load(__DIR__ . '/.env');
 
