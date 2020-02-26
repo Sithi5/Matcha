@@ -129,4 +129,62 @@ class ConfigController extends AbstractController
         }
         throw new NotFoundHttpException('No route found for "GET /config/droptable/'.$password.'"');
     }
+
+    /**
+     * @Route("/gitlog/{password}", name="git_log", requirements={"password"="\d+"})
+     */
+    public function GitLog(KernelInterface $kernel, int $password)
+    {
+        $dotenv = new Dotenv();
+        $dotenv->load(__DIR__.'/.env');
+
+        if ((int) $password == $_ENV['PASSWORD'])
+        {
+
+            $content = \shell_exec('git log');
+            return $this->render('config/config.html.twig', [
+                'content' => $content,
+            ]);
+        }
+        throw new NotFoundHttpException('No route found for "GET /config/droptable/'.$password.'"');
+    }
+
+        /**
+     * @Route("/gitpull/{password}", name="git_pull", requirements={"password"="\d+"})
+     */
+    public function GitPull(KernelInterface $kernel, int $password)
+    {
+        $dotenv = new Dotenv();
+        $dotenv->load(__DIR__.'/.env');
+
+        if ((int) $password == $_ENV['PASSWORD'])
+        {
+
+            $content = \shell_exec('git pull');
+            return $this->render('config/config.html.twig', [
+                'content' => $content,
+            ]);
+        }
+        throw new NotFoundHttpException('No route found for "GET /config/droptable/'.$password.'"');
+    }
+
+    /**
+     * @Route("/gitresethard/{password}", name="git_reset_hard", requirements={"password"="\d+"})
+     */
+    public function GitResetHard(KernelInterface $kernel, int $password)
+    {
+        $dotenv = new Dotenv();
+        $dotenv->load(__DIR__.'/.env');
+
+        if ((int) $password == $_ENV['PASSWORD'])
+        {
+
+            $content = \shell_exec('git reset --hard');
+            return $this->render('config/config.html.twig', [
+                'content' => $content,
+            ]);
+        }
+        throw new NotFoundHttpException('No route found for "GET /config/droptable/'.$password.'"');
+    }
+
 }
