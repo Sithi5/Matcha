@@ -202,7 +202,6 @@ class ConfigController extends AbstractController
      */
     public function GitSetUpToDate(KernelInterface $kernel, int $password)
     {
-        $test = 'test';
         $dotenv = new Dotenv();
         $dotenv->load(__DIR__ . '/.env');
 
