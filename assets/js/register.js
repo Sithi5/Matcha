@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('.birthdate-dropdown').dropdownDatepicker({
         submitFormat: 'yyyy-mm-dd',
         minAge: 18,
+        maxAge: 100,
     });
 })
 
