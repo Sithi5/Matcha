@@ -1,127 +1,167 @@
-
-.card{
+.card {
     margin-top: 5%;
     border-radius: 5%;
 }
 
-.form-content
-{
+.form-content {
     padding: 5%;
     border: 1px solid #ced4da;
     margin-bottom: 2%;
-
 }
 
-.form-row{
+.form-row {
     margin-top: 5%;
     margin-bottom: 3%;
-
 }
 
-.form-group{
+.form-group {
     text-align: center;
 }
-.form-control{
-    border-radius:1.5rem;
+
+.form-control {
+    border-radius: 1.5rem;
 }
-.btnSubmit
-{
-    border:none;
-    border-radius:1.5rem;
+
+.btnSubmit {
+    border: none;
+    border-radius: 1.5rem;
     padding: 1%;
+    margin-top: 5%;
     width: 20%;
     cursor: pointer;
     background: #0062cc;
     color: #fff;
 }
 
-.info-color{
+.info-color {
     background-color: rgb(224, 43, 200) !important;
 }
 
-.white-text, .dropdown .dropdown-menu .dropdown-item:hover, .dropdown .dropdown-menu .dropdown-item:active, .dropup .dropdown-menu .dropdown-item:hover, .dropup .dropdown-menu .dropdown-item:active, .dropleft .dropdown-menu .dropdown-item:hover, .dropleft .dropdown-menu .dropdown-item:active, .dropright .dropdown-menu .dropdown-item:hover, .dropright .dropdown-menu .dropdown-item:active, .side-nav, .side-nav .search-form .form-control, .md-toast-message a, .md-toast-message label, .md-toast-close-button, #toast-container>div, .picker__list-item--selected, .picker__list-item--selected:hover, .picker--focused .picker__list-item--selected, .picker--time .picker__button--clear:hover, .picker--time .picker__button--clear:focus, .picker--time .picker__button--clear:hover::before, .picker--time .picker__button--clear:focus::before, .picker__date-display, .picker__date-display .clockpicker-display .clockpicker-display-column .clockpicker-span-hours.text-primary, .picker__date-display .clockpicker-display .clockpicker-display-column .clockpicker-span-minutes.text-primary, .picker__date-display .clockpicker-display .clockpicker-display-column #click-am.text-primary, .picker__date-display .clockpicker-display .clockpicker-display-column #click-pm.text-primary, .clockpicker-display .clockpicker-display-column .clockpicker-span-hours.text-primary, .clockpicker-display .clockpicker-display-column .clockpicker-span-minutes.text-primary, .clockpicker-display .clockpicker-display-column #click-am.text-primary, .clockpicker-display .clockpicker-display-column #click-pm.text-primary, .darktheme .picker__box .picker__date-display .clockpicker-display, .darktheme .picker__box .picker__date-display .clockpicker-display .clockpicker-span-am-pm, .darktheme .picker__box .picker__calendar-container .clockpicker-plate .clockpicker-tick, .darktheme .picker__box .picker__footer button, .picker__box .picker__header .picker__date-display, .picker__box .picker__table .picker__day--outfocus, .picker__box .picker__table .picker__day--selected, .picker__box .picker__table .picker__day--selected:hover, .picker__box .picker__table .picker--focused {
+.white-text,
+.dropdown .dropdown-menu .dropdown-item:hover,
+.dropdown .dropdown-menu .dropdown-item:active,
+.dropup .dropdown-menu .dropdown-item:hover,
+.dropup .dropdown-menu .dropdown-item:active,
+.dropleft .dropdown-menu .dropdown-item:hover,
+.dropleft .dropdown-menu .dropdown-item:active,
+.dropright .dropdown-menu .dropdown-item:hover,
+.dropright .dropdown-menu .dropdown-item:active,
+.side-nav,
+.side-nav .search-form .form-control,
+.md-toast-message a,
+.md-toast-message label,
+.md-toast-close-button,
+#toast-container>div,
+.picker__list-item--selected,
+.picker__list-item--selected:hover,
+.picker--focused .picker__list-item--selected,
+.picker--time .picker__button--clear:hover,
+.picker--time .picker__button--clear:focus,
+.picker--time .picker__button--clear:hover::before,
+.picker--time .picker__button--clear:focus::before,
+.picker__date-display,
+.picker__date-display .clockpicker-display .clockpicker-display-column .clockpicker-span-hours.text-primary,
+.picker__date-display .clockpicker-display .clockpicker-display-column .clockpicker-span-minutes.text-primary,
+.picker__date-display .clockpicker-display .clockpicker-display-column #click-am.text-primary,
+.picker__date-display .clockpicker-display .clockpicker-display-column #click-pm.text-primary,
+.clockpicker-display .clockpicker-display-column .clockpicker-span-hours.text-primary,
+.clockpicker-display .clockpicker-display-column .clockpicker-span-minutes.text-primary,
+.clockpicker-display .clockpicker-display-column #click-am.text-primary,
+.clockpicker-display .clockpicker-display-column #click-pm.text-primary,
+.darktheme .picker__box .picker__date-display .clockpicker-display,
+.darktheme .picker__box .picker__date-display .clockpicker-display .clockpicker-span-am-pm,
+.darktheme .picker__box .picker__calendar-container .clockpicker-plate .clockpicker-tick,
+.darktheme .picker__box .picker__footer button,
+.picker__box .picker__header .picker__date-display,
+.picker__box .picker__table .picker__day--outfocus,
+.picker__box .picker__table .picker__day--selected,
+.picker__box .picker__table .picker__day--selected:hover,
+.picker__box .picker__table .picker--focused {
     color: #fff !important;
 }
 
-.form-part{
+.form-part {
     position: relative;
 }
 
-.form-margin{
+.form-margin {
     margin-top: 4%;
 }
 
-label{
+label {
     color: rgb(224, 43, 200);
 }
 
-select, input{
+select,
+input {
     border-color: rgb(209, 186, 204) !important;
 }
 
-.form-birthdate label, .form-gender label{
+.form-birthdate label,
+.form-gender label {
     margin-top: 4%;
 }
 
+
 /* Label float */
+
+
 /* ----------------- */
-  /* You can use "input ~ label" selector too */
 
 
+/* You can use "input ~ label" selector too */
 
-  input + label {
+input+label {
     position: absolute;
     left: 40px;
     top: 13%;
     transition: transform 200ms ease;
-
     /* You have to use this to make it clickable through*/
     pointer-events: none;
-  }
+}
 
-  input:focus + label,
-  input + label.freeze {
+input:focus+label,
+input+label.freeze {
     font-size: 0.7em;
     font-weight: 400;
-
     /* Use "Translate" function instead of classic positioning for better performance */
-    transform: translateY(-200%);
-  }
+    transform: translateY(-120%);
+}
 
-.force-label-top{
+.force-label-top {
     position: absolute;
     left: 40px;
     top: 13%;
     transition: transform 200ms ease;
-
     /* You have to use this to make it clickable through*/
     pointer-events: none;
-
     font-size: 0.7em;
     font-weight: 400;
-
     /* Use "Translate" function instead of classic positioning for better performance */
-    transform: translateY(-200%);
+    transform: translateY(-150%);
 }
 
 
-  /* date picker */
-  .date-dropdowns input{
-      display: none;
-  }
+/* date picker */
 
-  .date-dropdowns select.year, .date-dropdowns select.month, .date-dropdowns select.day{
+.date-dropdowns input {
+    display: none;
+}
+
+.date-dropdowns select.year,
+.date-dropdowns select.month,
+.date-dropdowns select.day {
     color: rgb(224, 43, 200);
     margin-right: 2%;
     margin-top: 2%;
     padding: .5rem;
     border-radius: .5rem;
     border-color: rgb(209, 186, 204);
-  }
+}
 
 
-  /*form error*/
+/*form error*/
 
-.form-error{
+.form-error {
     color: red;
 }

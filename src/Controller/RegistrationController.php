@@ -19,8 +19,13 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, $fromModal = false): Response
     {
+        if (!empty($request) && !empty($request->query->get('fromModal')))
+        {
+            $fromModal = true;
+        }
+
         if ($this->getUser()) {
             $this->addFlash('notice', 'You are Already logged in.');
             return $this->redirectToRoute('home');
@@ -32,6 +37,7 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+            $user->setUsername($user->getmail());
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -53,12 +59,21 @@ class RegistrationController extends AbstractController
             );
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
+        if ($fromModal === true)
+        {
+            return $this->render('registration/register.html.twig', [
+                'registrationForm' => $form->createView(),
+                'fromModal' => true,
+            ]);
+        }
+        else {
+            return $this->render('registration/register.html.twig', [
+                'registrationForm' => $form->createView(),
+            ]);
+        }
     }
 
-    /**
+        /**
      * @Route("/edituser", name="app_edituser")
      */
     public function editUser(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response

@@ -3,10 +3,14 @@
 {% block title %}
   Register
 {% endblock %}
+
 {% block body %}
-  {# navbar #}
-  {{ include('navbar/navbar.html.twig') }}
-  {# navbar #}
+
+{% if not fromModal is defined %}
+	{#navbar #}
+	{{ include("navbar/navbar.html.twig") }}
+	{#navbar #}
+{% endif %}
   <div class="container register-form">
     {# card content #}
     <div class="text-center" style="color: #757575;">

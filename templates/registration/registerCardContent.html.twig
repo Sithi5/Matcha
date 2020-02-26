@@ -4,10 +4,10 @@
   <div class="col">
     <!-- first name -->
     <div class="form-part label-float">
-      {{ form_widget(registrationForm.username, {'attr': {'type': 'text', 'class': 'form-control'}}) }}
-      <label class="hide-label" for="registration_form_username">First name</label>
+      {{ form_widget(registrationForm.name, {'attr': {'type': 'text', 'class': 'form-control'}}) }}
+      <label class="hide-label" for="registration_form_name">First name</label>
       <div class="form-error">
-        {{ form_errors(registrationForm.username) }}
+        {{ form_errors(registrationForm.name) }}
       </div>
     </div>
   </div>

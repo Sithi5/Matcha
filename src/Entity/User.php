@@ -8,8 +8,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
  * @UniqueEntity(fields={"mail"}, message="There is already an account with this e-mail address")
+ * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
+ *
  */
 class User implements UserInterface
 {
@@ -55,6 +56,11 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $lastname;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
 
     public function getId(): ?int
     {
@@ -173,6 +179,18 @@ class User implements UserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }
