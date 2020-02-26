@@ -187,4 +187,23 @@ class ConfigController extends AbstractController
         throw new NotFoundHttpException('No route found for "GET /config/droptable/'.$password.'"');
     }
 
+    /**
+     * @Route("/yarnencoredev/{password}", name="yarn_encore_dev", requirements={"password"="\d+"})
+     */
+    public function YarnEncoreDev(KernelInterface $kernel, int $password)
+    {
+        $dotenv = new Dotenv();
+        $dotenv->load(__DIR__.'/.env');
+
+        if ((int) $password == $_ENV['PASSWORD'])
+        {
+
+            $content = \shell_exec('yarn encore dev');
+            return $this->render('config/config.html.twig', [
+                'content' => $content,
+            ]);
+        }
+        throw new NotFoundHttpException('No route found for "GET /config/droptable/'.$password.'"');
+    }
+
 }
