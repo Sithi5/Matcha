@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Dotenv\Dotenv;
 
 /**
- * @Route("/config")
+ * @Route("/config", condition="'dev' === '%kernel.environment%'")
  */
 class ConfigController extends AbstractController
 {
