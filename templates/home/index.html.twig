@@ -2,7 +2,7 @@
 
 {% block body %}
   {{ parent() }}
-  <header class="masthead">
+  <header class="masthead" id="index-masthead">
     <div class="container">
       <div class="intro-text">
         <div class="intro-lead-in">Get True Story{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {{name}}{% endif %}
@@ -30,6 +30,45 @@
       </div>
     </div>
   </header>
-  <img src="images/forest-gump.jpg" class="avatar">
+
+  {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+    <section id="why-matcha-section" class="index-section-1">
+      <div class="index-section-1-div-1">
+        <h2 class="Text-Pink h2">Why Matcha?</h2>
+        <h3 class="h3">Travel with Someone You Love</h3>
+        <p>A simple way to discover a new world of traveling.</p>
+      </div>
+    </section>
+      <section id="how-does-it-work-section" class="index-section-1">
+      <div class="index-section-1-div-1">
+        <h2 class="Text-Pink h2">How does it work?</h2>
+        <h3 class="h3">Travel with Someone You Love</h3>
+        <p>A simple way to discover a new world of traveling.</p>
+      </div>
+    </section>
+      <section id="testimonials-section" class="index-section-1">
+      <div class="index-section-1-div-1">
+        <h2 class="Text-Pink h2">Our success stories</h2>
+        <h3 class="h3">Over 1.6 million people met their partner on Matcha.</h3>
+      </div>
+      <div>
+        <img src="./images/forest-gump.jpg">
+        <img src="./images/forest-gump.jpg">
+        <img src="./images/forest-gump.jpg">
+        <img src="./images/forest-gump.jpg">
+        <img src="./images/forest-gump.jpg">
+        <img src="./images/forest-gump.jpg">
+        <img src="./images/forest-gump.jpg">
+      </div>
+    </section>
+    <br>
+    <section class="index-section-ready-now">
+      <div class="container text-center">
+          <a class="btn btn-primary center-block" href="#index-masthead">
+            Ready now?
+          </a>
+      </div>
+    </section>
+  {% endif %}
 {% endblock %}
 
