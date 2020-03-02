@@ -5,7 +5,7 @@ $(document).ready(function() {
         minAge: 18,
         maxAge: 100,
     });
-})
+});
 
 //set birthday select class to required after datepicker is loaded (1s)
 setTimeout(function() {
@@ -14,8 +14,7 @@ setTimeout(function() {
     })
 }, 1000);
 
-
-//ajax form
+//ajax form register
 $('#modal_form_register').submit(function() {
     $.ajax({
         url: $('#modal_form_register').attr('action'),

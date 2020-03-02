@@ -17,17 +17,18 @@
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
           <!-- button to launch modale register -->
-          <button type="button" class="btn btnSubmit btn-getstarted" data-toggle="modal" data-target="#modal-register">
+          <button id="button-getstarted" type="button" class="btn btnSubmit btn-getstarted" data-toggle="modal" data-target="#modal-register">
             Register
           </button>
+
           <!-- modale register struct -->
           <div id="modal-register" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div id="modal-content-register" class="modal-content">
-                {{ render(controller('App\\Controller\\RegistrationController::register', {
-                    'fromModal': true,
-                  }
-                )) }}
+                  {{ render(controller('App\\Controller\\RegistrationController::register', {
+                      'fromModal': true,
+                    }
+                  )) }}
               </div>
             </div>
           </div>
@@ -95,7 +96,7 @@
         <div class="content-start-meeting">
           <img src="./images/matcha-love-logo.png" style="width: 161px; height: 141px;">
           <p class="text-start-meeting Text-White">Start meeting people now</p>
-            <a class="btn btn-getstarted btn-rounded" href="#index-masthead">
+            <a class="btn btn-rounded btn-register" href="#index-masthead">
               Register
             </a>
         </div>
@@ -103,5 +104,4 @@
     </section>
 
   {% endif %}
-
 {% endblock %}

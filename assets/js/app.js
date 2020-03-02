@@ -7,6 +7,8 @@ require('webpack-jquery-ui');
 require('jquery-dropdown-datepicker');
 
 var $ = require('jquery');
+var $2 = require('jquery');
+
 global.$ = global.jQuery = $;
 
 // loads the bootstrap package from node_modules

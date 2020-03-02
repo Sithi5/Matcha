@@ -12,6 +12,17 @@ html {
     background-size: cover;
 }
 
+.btn-register {
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background-color: rgb(224, 43, 200);
+}
+
+.btn-register:hover {
+    background-color: rgb(161, 25, 214);
+}
+
 .index-section-1 {
     background: #fff;
     padding-top: 6%;
