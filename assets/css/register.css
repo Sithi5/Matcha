@@ -29,8 +29,12 @@
     margin-top: 5%;
     width: 20%;
     cursor: pointer;
-    background: #0062cc;
     color: #fff;
+    background-color: rgb(224, 43, 200);
+}
+
+.btnSubmit:hover {
+    background-color: rgb(161, 25, 214);
 }
 
 .info-color {

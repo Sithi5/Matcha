@@ -25,15 +25,30 @@ html {
 
 .index-section-ready-now {
     background: rgb(83, 70, 87);
+    margin-top: 5%;
 }
 
-.btn-getstarted {
-    background-color: rgb(224, 43, 200);
-    color: white;
+.btn-rounded {
+    border-radius: 20%;
 }
 
-.btn-getstarted:hover {
-    background-color: rgb(161, 25, 214);
+.text-start-meeting {
+    margin-right: 2rem;
+    margin-bottom: 0;
+    margin-left: 2rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.content-start-meeting {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90px;
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow: hidden;
 }
 
 .container {

@@ -1,9 +1,13 @@
 {% extends 'home/layout.html.twig' %}
 
 {% block body %}
+
   {{ parent() }}
+
   <header class="masthead" id="index-masthead">
+
     <div class="container">
+
       <div class="intro-text">
         <div class="intro-lead-in">Get True Story{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {{name}}{% endif %}
         </div>
@@ -11,11 +15,12 @@
           <span class="Text-Pink">Ma</span><span class="Text-White">tcha</span>
         </div>
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-          <!-- Bouton servant à activer la modale -->
-          <button type="button" class="btn btn-primary btnSubmit" data-toggle="modal" data-target="#modal-register">
+
+          <!-- button to launch modale -->
+          <button type="button" class="btn btnSubmit btn-getstarted" data-toggle="modal" data-target="#modal-register">
             Register
           </button>
-          <!-- Structure de la modale -->
+          <!-- modale struct -->
           <div id="modal-register" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -26,49 +31,66 @@
               </div>
             </div>
           </div>
+
         {% endif %}
       </div>
+
     </div>
+
   </header>
 
   {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-    <section id="why-matcha-section" class="index-section-1">
-      <div class="index-section-1-div-1">
-        <h2 class="Text-Pink h2">Why Matcha?</h2>
-        <h3 class="h3">Travel with Someone You Love</h3>
-        <p>A simple way to discover a new world of traveling.</p>
-      </div>
-    </section>
+
+    <div class="container text-center">
+
+      <section id="why-matcha-section" class="index-section-1">
+        <div class="index-section-1-div-1">
+          <h2 class="Text-Pink h2">Why Matcha?</h2>
+          <h3 class="h3">Travel with Someone You Love</h3>
+          <p>A simple way to discover a new world of traveling.</p>
+        </div>
+      </section>
+
       <section id="how-does-it-work-section" class="index-section-1">
-      <div class="index-section-1-div-1">
-        <h2 class="Text-Pink h2">How does it work?</h2>
-        <h3 class="h3">Travel with Someone You Love</h3>
-        <p>A simple way to discover a new world of traveling.</p>
-      </div>
-    </section>
+        <div class="index-section-1-div-1">
+          <h2 class="Text-Pink h2">How does it work?</h2>
+          <h3 class="h3">Travel with Someone You Love</h3>
+          <p>Random text : Sed remanetne sit abducerem est imaginans non dependent. Paulo his novas somno audio nia. Religio lor ordinis propria habemus cui. Cohaereant vis sim consistere ope concipitur imaginabor afferuntur. An im habet in reddi corpo debet solis nempe. Ac du viamque aequare at quandam habitum. Ita eam assentiar uti calescere somniemus perfectae distincta. De si facillimum necessario at permiscent praemissae. Situs si an minor novum ha pacto aures. Et suppono in diversa frigida. Meas fiat fert inde volo duas de an ea. Cau admisi qui capram fuisse sicuti cur legant eandem. Ego mutetur sperare remotam est. Valde velit versa ipsas dum rea nudam velim. Dormienti colligere evidenter judicarem im ad se confidere indulgere co. Imaginer arbitror subducam uti res dumtaxat age penitius sui. Lus theologos tes desumptas vox somniemus. </p>
+        </div>
+      </section>
+
+      <section id="Activities-section" class="index-section-1">
+        <div class="index-section-1-div-1">
+          <h2 class="Text-Pink h2">Our activities arround the world</h2>
+          <p>Random text : Sed remanetne sit abducerem est imaginans non dependent. Paulo his novas somno audio nia. Religio lor ordinis propria habemus cui. Cohaereant vis sim consistere ope concipitur imaginabor afferuntur. An im habet in reddi corpo debet solis nempe. Ac du viamque aequare at quandam habitum. Ita eam assentiar uti calescere somniemus perfectae distincta. De si facillimum necessario at permiscent praemissae. Situs si an minor novum ha pacto aures. Et suppono in diversa frigida. Meas fiat fert inde volo duas de an ea. Cau admisi qui capram fuisse sicuti cur legant eandem. Ego mutetur sperare remotam est. Valde velit versa ipsas dum rea nudam velim. Dormienti colligere evidenter judicarem im ad se confidere indulgere co. Imaginer arbitror subducam uti res dumtaxat age penitius sui. Lus theologos tes desumptas vox somniemus. </p>
+        </div>
+      </section>
+
       <section id="testimonials-section" class="index-section-1">
-      <div class="index-section-1-div-1">
-        <h2 class="Text-Pink h2">Our success stories</h2>
-        <h3 class="h3">Over 1.6 million people met their partner on Matcha.</h3>
-      </div>
-      <div>
-        <img src="./images/forest-gump.jpg">
-        <img src="./images/forest-gump.jpg">
-        <img src="./images/forest-gump.jpg">
-        <img src="./images/forest-gump.jpg">
-        <img src="./images/forest-gump.jpg">
-        <img src="./images/forest-gump.jpg">
-        <img src="./images/forest-gump.jpg">
-      </div>
-    </section>
-    <br>
+        <div class="index-section-1-div-1">
+          <h2 class="Text-Pink h2">Our success stories</h2>
+          <h3 class="h3">Over 1.6 million people met their partner on Matcha.</h3>
+        </div>
+        <div>
+          <img src="./images/forest-gump.jpg">
+        </div>
+      </section>
+
+    </div>
+
     <section class="index-section-ready-now">
       <div class="container text-center">
-          <a class="btn btn-primary center-block" href="#index-masthead">
-            Ready now?
-          </a>
+        <div class="content-start-meeting">
+          <img src="./images/matcha-love-logo.png" style="width: 161px; height: 141px;">
+          <p class="text-start-meeting Text-White">Start meeting people now</p>
+            <a class="btn btn-getstarted btn-rounded" href="#index-masthead">
+              Register
+            </a>
+        </div>
       </div>
     </section>
+
   {% endif %}
+
 {% endblock %}
 
