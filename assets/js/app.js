@@ -17,10 +17,12 @@ require('popper.js');
 //my personnal css
 require('../css/home-index.css');
 require('../css/navbar.css');
-require('../css/register.css');
+require('../css/register-login.css');
 
 //my personnal js
 require('./register.js')
+require('./login.js')
+require('./labelFloat.js')
 
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();

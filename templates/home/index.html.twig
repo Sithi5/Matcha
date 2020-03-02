@@ -16,18 +16,30 @@
         </div>
         {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
-          <!-- button to launch modale -->
+          <!-- button to launch modale register -->
           <button type="button" class="btn btnSubmit btn-getstarted" data-toggle="modal" data-target="#modal-register">
             Register
           </button>
-          <!-- modale struct -->
+          <!-- modale register struct -->
           <div id="modal-register" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
-              <div class="modal-content">
+              <div id="modal-content-register" class="modal-content">
                 {{ render(controller('App\\Controller\\RegistrationController::register', {
                     'fromModal': true,
                   }
                 )) }}
+              </div>
+            </div>
+          </div>
+
+          <!-- modale login struct -->
+          <div id="modal-login" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div id="modal-content-login" class="modal-content">
+                  {{ render(controller('App\\Controller\\SecurityController::login', {
+                      'fromModal': true,
+                    }
+                  )) }}
               </div>
             </div>
           </div>
@@ -93,4 +105,3 @@
   {% endif %}
 
 {% endblock %}
-

@@ -12,9 +12,9 @@
 	{#navbar #}
 {% endif %}
   <div class="container register-form">
-    {# card content #}
+    {# content #}
     <div class="text-center" style="color: #757575;">
-      <div class="card">
+      <div class="card-register">
         <h5 class="card-header info-color white-text text-center py-4">
           <strong>Tell us about you</strong>
         </h5>
@@ -23,10 +23,11 @@
                     'fromModal': true,
                   }
                   )}) }}
-            {{ include('registration/registerCardContent.html.twig') }}
+            {{ include('registration/registerFormContent.html.twig') }}
           {{ form_end(registrationForm) }}
         </div>
       </div>
     </div>
   </div>
+
 {% endblock %}

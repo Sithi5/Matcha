@@ -7,21 +7,6 @@ $(document).ready(function() {
     });
 })
 
-//script setting label top of field when something inside field and label down if nothing inside field
-$('.label-float :input').blur(function() {
-        if ($(this).val()) {
-            $(this).labels().addClass('force-label-top');
-        } else if (!$(this).val()) {
-            $(this).labels().removeClass('force-label-top');
-        }
-    })
-    //script setting label top of field when something inside field when reload of page
-$(".label-float :input").each(function() {
-    if ($(this).val().length != 0) {
-        $(this).labels().addClass('force-label-top');
-    }
-})
-
 //set birthday select class to required after datepicker is loaded (1s)
 setTimeout(function() {
     $('.date-dropdowns select').each(function() {
@@ -29,6 +14,8 @@ setTimeout(function() {
     })
 }, 1000);
 
+
+//ajax form
 $('#modal_form_register').submit(function() {
     $.ajax({
         url: $('#modal_form_register').attr('action'),
@@ -39,7 +26,7 @@ $('#modal_form_register').submit(function() {
                 $('#modal-register').modal('hide')
                 location.reload();
             }
-            $('.modal-content').html(data);
+            $('#modal-content-register').html(data);
         }
     });
     return false;
