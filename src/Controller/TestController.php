@@ -20,7 +20,12 @@ class TestController extends AbstractController
         $message = (new \Swift_Message('Finish your inscription'))
                 ->setFrom('ma.sithis@gmail.com')
                 ->setTo($usermail)
-                ->setBody('Test email',
+                ->setBody(
+                    $this->renderView(
+                        // templates/emails/registration.html.twig
+                        'emails/registration.html.twig',
+                        ['name' => $name]
+                    ),
                     'text/html'
                 )
             ;
