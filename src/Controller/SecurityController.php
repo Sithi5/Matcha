@@ -13,11 +13,16 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="app_login")
      */
-    public function login(Request $request, AuthenticationUtils $authenticationUtils): Response
+    public function login(Request $request, AuthenticationUtils $authenticationUtils, $fromModal = false): Response
     {
         if ($this->getUser()) {
             $this->addFlash('notice', 'You are Already logged in.');
             return $this->redirectToRoute('home');
+        }
+
+        if (!empty($request) && !empty($request->query->get('fromModal')))
+        {
+            $fromModal = true;
         }
 
         // get the login error if there is one
@@ -26,11 +31,21 @@ class SecurityController extends AbstractController
         $last_mail = $authenticationUtils->getLastUserName();
 
 
-        return $this->render('security/login.html.twig', [
-            'last_mail' => $last_mail,
-            'error' => $error,
-            'fromModal' => true,
-        ]);
+        if ($fromModal === true)
+        {
+            return $this->render('security/login.html.twig', [
+                'last_mail' => $last_mail,
+                'error' => $error,
+                'fromModal' => true,
+            ]);
+        }
+        else {
+            return $this->render('security/login.html.twig', [
+                'last_mail' => $last_mail,
+                'error' => $error,
+            ]);
+        }
+        return $this->render('security/login.html.twig', ['last_mail' => $last_mail, 'error' => $error]);
     }
 
     /**
