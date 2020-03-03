@@ -19,10 +19,7 @@
           <strong>Login</strong>
         </h5>
         <div class="card-body px-lg-5 pt-0">
-            <form method="POST" id="modal_form_login" action={{ path('app_login', {
-                    'fromModal': true,
-                  })
-                  }}>
+            <form method="POST" id="modal_form_login" action={{ path('app_login')}}>
                 {{ include('security/loginFormContent.html.twig') }}
                 <button id="login_form_submit" type="submit" class="btn btnSubmit">Login</button>
             </form>

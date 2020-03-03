@@ -34,7 +34,7 @@
 		<ul class="navbar-nav ml-auto">
 			{% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 				<li class="nav-item">
-					<a class="btn nav-btn-sign-in" data-toggle="modal" data-target="#modal-login">Sign in</a>
+					<a class="btn nav-btn-sign-in" onclick="showModalLogin()" data-toggle="modal" data-target="#modal-register">Sign in</a>
 				</li>
 			{% else %}
 				<li class="nav-item">
