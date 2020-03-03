@@ -20,8 +20,9 @@
         </h5>
         <div class="card-body px-lg-5 pt-0">
             <form method="POST" id="modal_form_login" action={{ path('app_login')}}>
-                {{ include('security/loginFormContent.html.twig') }}
-                <button id="login_form_submit" type="submit" class="btn btnSubmit">Login</button>
+                <input type="hidden" name="fromModal" value="true"></input>
+                  {{ include('security/loginFormContent.html.twig') }}
+                <input id="login_form_submit" type="submit" class="btn btnSubmit" name="login"/>
             </form>
         </div>
       </div>

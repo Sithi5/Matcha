@@ -13,13 +13,15 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+//service
+use App\Service\MailManager;
 
 class RegistrationController extends AbstractController
 {
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, $fromModal = false): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, \Swift_Mailer $mailer ,$fromModal = false): Response
     {
         if (!empty($request) && !empty($request->query->get('fromModal')))
         {
@@ -51,6 +53,9 @@ class RegistrationController extends AbstractController
 
             // do anything else you need here, like send an email
 
+            $this->registeryMail($user->getName(), $user->getMail(), $mailer);
+            // do anything else you need here, like send an email
+
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
@@ -71,6 +76,19 @@ class RegistrationController extends AbstractController
                 'registrationForm' => $form->createView(),
             ]);
         }
+    }
+
+    public function registeryMail($name, $usermail, \Swift_Mailer $mailer)
+    {
+        $message = (new \Swift_Message('Finish your inscription'))
+                ->setFrom('ma.sithis@gmail.com')
+                ->setTo($usermail)
+                ->setBody('Test email',
+                    'text/html'
+                )
+            ;
+
+        $mailer->send($message);
     }
 
         /**
