@@ -22,5 +22,6 @@ require('../css/navbar.css');
 require('../css/register-login.css');
 
 //my personnal js
-require('./register-login.js')
+require('./register.js')
+require('./login.js')
 require('./labelFloat.js')
