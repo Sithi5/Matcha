@@ -20,7 +20,7 @@
 		//remove one by one flash notif display
 			setTimeout(function(){
 				document.getElementById("flash-message-div-".concat({{ countMessage }})).style.display = 'none';
-				}, 3000 + ({{ countMessage }} * 1000));
+				}, 5000 + ({{ countMessage }} * 1000));
 		</script>
 	{% endfor %}
 	{#error flash notif#}
@@ -37,7 +37,7 @@
 		//remove one by one flash notif display
 			setTimeout(function(){
 				document.getElementById("flash-message-div-".concat({{ countMessage }})).style.display = 'none';
-				}, 3000 + ({{ countMessage }} * 1000));
+				}, 5000 + ({{ countMessage }} * 1000));
 		</script>
 	{% endfor %}
 	{# end of flash notif #}
