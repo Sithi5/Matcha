@@ -43,6 +43,7 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            //set token for account confirmation and set account to not confirmed
             $user->setToken(hash('md5', random_bytes(10)));
             $user->setConfirmed(false);
 
@@ -53,7 +54,9 @@ class RegistrationController extends AbstractController
             // do anything else you need here, like send an email
             //sending confirmation mail here
             $token = $user->getToken();
-            $this->registerMail($mailer, $token, $user->getMail(), $user->getName());
+            $name = $user->getName();
+            $this->registerMail($mailer, $token, $user->getMail(), $name);
+            $this->addFlash('notice', 'Thank you ' . $name . '. We sent you an email with a link to confirm your account');
 
             // do anything else you need here, like send an email
 
@@ -166,14 +169,16 @@ class RegistrationController extends AbstractController
         $user = $manager->getRepository(User::class)->findOneBy(['name' => $name]);
         if (isset($user) && $token === $user->getToken())
         {
+            $this->addFlash('notice', 'Your account is now confirmed ' . $name . '.');
             $user->setToken(null);
             $user->setRoles(['ROLE_USER']);
             $user->setConfirmed(true);
             $manager->persist($user);
             $manager->flush();
+            return $this->redirectToRoute('home');
         }
 
-
+        $this->addFlash('error', 'Unvalid token or account already confirmed.');
         return $this->redirectToRoute('home');
     }
 }

@@ -9,12 +9,29 @@
 	{% for message in app.flashes('notice') %}
 		{% set countMessage = countMessage + 1 %}
 		<div id="flash-message-div-{{ countMessage }}" class="alert alert-primary">
-			<p class="text-capitalize text-success"> Message flash : {{ message }}
+			<p class="text-capitalize text-success"> flash Message : {{ message }}
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
  			 		<span aria-hidden="true">&times;</span>
 				</button>
 			</p>
 
+		</div>
+		<script>
+		//remove one by one flash notif display
+			setTimeout(function(){
+				document.getElementById("flash-message-div-".concat({{ countMessage }})).style.display = 'none';
+				}, 3000 + ({{ countMessage }} * 1000));
+		</script>
+	{% endfor %}
+	{#error flash notif#}
+	{% for message in app.flashes('error') %}
+		{% set countMessage = countMessage + 1 %}
+		<div id="flash-message-div-{{ countMessage }}" class="alert alert-danger">
+			<p class="text-capitalize text-error"> flash Message : {{ message }}
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+ 			 		<span aria-hidden="true">&times;</span>
+				</button>
+			</p>
 		</div>
 		<script>
 		//remove one by one flash notif display
