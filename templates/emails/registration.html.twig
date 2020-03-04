@@ -1,7 +1,9 @@
 {# templates/emails/registration.html.twig #}
 <h3>{{ name }}, You did it! You registered!</h3>
 
-
-{# example, assuming you have a route named "login" #}
-
-Thanks a lot!
+{# local use #}
+Thanks a lot! To confirm your account click on this link :
+<a href="matcha.test/confirmaccount/{{ token }}/{{ name }}" >"matcha.test/confirmaccount/{{ token }}/{{ name }}"</a>
+{# deployed use
+Thanks a lot! To confirm your account click on this link : startsys.com/confirmaccout/{{ token }}/{{ username }}
+#}

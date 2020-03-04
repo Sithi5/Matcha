@@ -16,7 +16,8 @@ class HomeController extends AbstractController
         {
             return $this->render('home/index.html.twig', [
                 'controller_name' => 'HomeController',
-                'name' => $user->getname(),
+                'name' => $user->getName(),
+                'confirmed' => $user->getConfirmed(),
             ]);
         }
 

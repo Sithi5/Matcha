@@ -13,15 +13,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-//service
-use App\Service\MailManager;
-
 class RegistrationController extends AbstractController
 {
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, \Swift_Mailer $mailer ,$fromModal = false): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator, \Swift_Mailer $mailer, $fromModal = false): Response
     {
         if (!empty($request) && !empty($request->query->get('fromModal')))
         {
@@ -46,14 +43,18 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $user->setToken(hash('md5', random_bytes(10)));
+            $user->setConfirmed(false);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
             // do anything else you need here, like send an email
+            //sending confirmation mail here
+            $token = $user->getToken();
+            $this->registerMail($mailer, $token, $user->getMail(), $user->getName());
 
-            $this->registeryMail($user->getName(), $user->getMail(), $mailer);
             // do anything else you need here, like send an email
 
             return $guardHandler->authenticateUserAndHandleSuccess(
@@ -78,18 +79,6 @@ class RegistrationController extends AbstractController
         }
     }
 
-    public function registeryMail($name, $usermail, \Swift_Mailer $mailer)
-    {
-        $message = (new \Swift_Message('Finish your inscription'))
-                ->setFrom('ma.sithis@gmail.com')
-                ->setTo($usermail)
-                ->setBody('Test email',
-                    'text/html'
-                )
-            ;
-
-        $mailer->send($message);
-    }
 
         /**
      * @Route("/edituser", name="app_edituser")
@@ -148,4 +137,43 @@ class RegistrationController extends AbstractController
         }
     }
 
+    public function registerMail(\Swift_Mailer $mailer, string $token, string $usermail, string $name)
+    {
+        $message = (new \Swift_Message('Finish your inscription'))
+                ->setFrom('admin@startsys.com')
+                ->setTo($usermail)
+                ->setBody(
+                    $this->renderView(
+                        // templates/emails/registration.html.twig
+                        'emails/registration.html.twig',[
+                            'name' => $name,
+                            'token' => $token,
+                        ]
+                    ),
+                    'text/html'
+                )
+            ;
+
+        $mailer->send($message);
+    }
+
+    /**
+     * @Route("/confirmaccount/{token}/{name}", name="app_confirm_user_email")
+     */
+    public function confirmAccount(string $token, string $name): Response
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $user = $manager->getRepository(User::class)->findOneBy(['name' => $name]);
+        if (isset($user) && $token === $user->getToken())
+        {
+            $user->setToken(null);
+            $user->setRoles(['ROLE_USER']);
+            $user->setConfirmed(true);
+            $manager->persist($user);
+            $manager->flush();
+        }
+
+
+        return $this->redirectToRoute('home');
+    }
 }

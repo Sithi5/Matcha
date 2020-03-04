@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
     /**
-     * @Route("/test", name="test")
+     * @Route("/test", condition="'dev' === '%kernel.environment%'")
      */
 class TestController extends AbstractController
 {
@@ -17,14 +17,17 @@ class TestController extends AbstractController
     {
         $name = "malo";
         $usermail = "ma.sithis@gmail.com";
+        $token = hash('md5', random_bytes(10));
         $message = (new \Swift_Message('Finish your inscription'))
-                ->setFrom('ma.sithis@gmail.com')
+                ->setFrom('admin@startsys.com')
                 ->setTo($usermail)
                 ->setBody(
                     $this->renderView(
                         // templates/emails/registration.html.twig
-                        'emails/registration.html.twig',
-                        ['name' => $name]
+                        'emails/registration.html.twig',[
+                            'name' => $name,
+                            'token' => $token,
+                        ]
                     ),
                     'text/html'
                 )
