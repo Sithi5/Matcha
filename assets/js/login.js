@@ -6,10 +6,11 @@ $('#modal_form_login').submit(function() {
         data: $('#modal_form_login').serialize(),
         success: function(data) {
             if (data.data === 'success') {
-                $('#modal-register').modal('hide')
+                $('#modal-register').modal('hide');
                 location.reload();
             }
             $('#modal-content-register').html(data);
+
         }
     });
     return false;

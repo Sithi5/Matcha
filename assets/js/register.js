@@ -22,7 +22,7 @@ $('#modal_form_register').submit(function() {
         data: $('#modal_form_register').serialize(),
         success: function(data) {
             if (data.data === 'success') {
-                $('#modal-register').modal('hide')
+                $('#modal-register').modal('hide');
                 location.reload();
             }
             $('#modal-content-register').html(data);

@@ -15,68 +15,13 @@
         <div class="intro-heading text-uppercase">
           <span class="Text-Pink">Ma</span><span class="Text-White">tcha</span>
         </div>
-        {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
-          <!-- button to launch modale register -->
-          <button id="button-getstarted" onclick="showModalRegister()" type="button" class="btn btnSubmit btn-getstarted" data-toggle="modal" data-target="#modal-register">
-            Register
-          </button>
+        {{ include('modals/modal-register-login.html.twig') }}
 
-          <!-- modale struct -->
-          <div id="modal-register" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div id="modal-content-register" class="modal-content">
-                {# ajax script put the corresponding view in the block #}
-              </div>
-            </div>
-          </div>
-
-        {% endif %}
       </div>
 
     </div>
 
-<script>
-  function showModalLogin() {
-      $("#modal-content-register").hide();
-      $.ajax({
-          url: '/login',
-          type: 'GET',
-          data: {
-              fromModal: true,
-            },
-
-          success: function(data) {
-              if (data.data === 'success') {
-                  $('#modal-register').modal('hide')
-                  location.reload();
-              }
-              $('#modal-content-register').html(data);
-              $("#modal-content-register").show();
-          }
-      });
-  }
-
-  function showModalRegister() {
-      $("#modal-content-register").hide();
-      $.ajax({
-          url: '/register',
-          type: 'GET',
-          data: {
-              fromModal: true,
-            },
-
-          success: function(data) {
-              if (data.data === 'success') {
-                  $('#modal-register').modal('hide')
-                  location.reload();
-              }
-              $('#modal-content-register').html(data);
-              $("#modal-content-register").show();
-          }
-      });
-  }
-</script>
   </header>
 
   {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
