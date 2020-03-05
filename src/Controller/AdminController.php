@@ -12,8 +12,10 @@ class AdminController extends AbstractController
      */
     public function index()
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $user = $this->getUser();
         return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
+            'name' => $user->getName(),
         ]);
     }
 }

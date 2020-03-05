@@ -72,6 +72,11 @@ class User implements UserInterface
      */
     private $confirmed;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $resentMailRegister = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -225,6 +230,18 @@ class User implements UserInterface
     public function setConfirmed(bool $confirmed): self
     {
         $this->confirmed = $confirmed;
+
+        return $this;
+    }
+
+    public function getResentMailRegister(): ?bool
+    {
+        return $this->resentMailRegister;
+    }
+
+    public function setResentMailRegister(?bool $resentMailRegister): self
+    {
+        $this->resentMailRegister = $resentMailRegister;
 
         return $this;
     }

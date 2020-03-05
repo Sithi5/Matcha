@@ -83,7 +83,7 @@ class RegistrationController extends AbstractController
     }
 
 
-        /**
+    /**
      * @Route("/edituser", name="app_edituser")
      */
     public function editUser(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
@@ -161,6 +161,28 @@ class RegistrationController extends AbstractController
     }
 
     /**
+     * @Route("/registerresentmail/", name="app_register_resent_mail")
+     */
+    public function registerResentMail(\Swift_Mailer $mailer)
+    {
+        if (($user = $this->getUser()) && !$user->getConfirmed() && !$user->getResentMailRegister())
+        {
+            //ensure that user can't spam email resent
+            $user->setResentMailRegister(true);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+            //
+
+            $this->registerMail($mailer, $user->getToken(), $user->getMail(), $user->getName());
+            $this->addFlash('notice', 'We resent the email.');
+            return $this->redirectToRoute('home');
+        }
+        else {
+            throw new NotFoundHttpException();
+        }
+    }
+    /**
      * @Route("/confirmaccount/{token}/{name}", name="app_confirm_user_email")
      */
     public function confirmAccount(string $token, string $name): Response
@@ -169,12 +191,12 @@ class RegistrationController extends AbstractController
         $user = $manager->getRepository(User::class)->findOneBy(['name' => $name]);
         if (isset($user) && $token === $user->getToken())
         {
-            $this->addFlash('notice', 'Your account is now confirmed ' . $name . '.');
             $user->setToken(null);
             $user->setRoles(['ROLE_USER']);
             $user->setConfirmed(true);
             $manager->persist($user);
             $manager->flush();
+            $this->addFlash('notice', 'Your account is now confirmed ' . $name . '.');
             return $this->redirectToRoute('home');
         }
 

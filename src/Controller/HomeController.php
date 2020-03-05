@@ -18,6 +18,7 @@ class HomeController extends AbstractController
                 'controller_name' => 'HomeController',
                 'name' => $user->getName(),
                 'confirmed' => $user->getConfirmed(),
+                'resentMailRegister' => $user->getResentMailRegister(),
             ]);
         }
 

@@ -24,6 +24,9 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Type;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\upper;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
 class RegistrationFormType extends AbstractType
@@ -96,7 +99,6 @@ class RegistrationFormType extends AbstractType
                         'max' => 50,
                         'maxMessage' => 'Your password should be maximum {{ limit }} characters',
                     ]),
-
                 ],
                 'invalid_message' => 'Passwords don\'t match'
             ])
