@@ -30,23 +30,29 @@
     {{ form_errors(registrationForm.mail) }}
   </div>
 </div>
+
 {# Password #}
 <div class="form-margin">
   <div class="form-part label-float">
     {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
     <label for="registration_form_plainPassword_first">Your password</label>
-    <small id="materialRegisterFormPasswordHelpBlock" class="text-right form-text text-muted small-password">
-      At least 8 characters and 1 digit
-    </small>
+
     <div class="form-error">
       {{ form_errors(registrationForm.plainPassword.first) }}
     </div>
   </div>
-  <div class="form-part label-float">
-    {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
-    <label for="registration_form_plainPassword_second">Repeat your password</label>
-    <div class="form-error">
-      {{ form_errors(registrationForm.plainPassword.second) }}
+
+{# Password  repeat#}
+  <div class="form-margin">
+    <div class="form-part label-float">
+      {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+      <label for="registration_form_plainPassword_second">Repeat your password</label>
+      <div class="form-error">
+        {{ form_errors(registrationForm.plainPassword.second) }}
+      </div>
+          <small id="" class="text-right form-text text-muted small-password">
+        8 characters, 1 digit, 1 uppercase and 1 lowercase
+      </small>
     </div>
   </div>
 </div>

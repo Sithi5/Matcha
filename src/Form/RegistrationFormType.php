@@ -46,7 +46,11 @@ class RegistrationFormType extends AbstractType
                         // max length allowed by Symfony for security reasons
                         'max' => 50,
                         'maxMessage' => 'Your name should be maximum {{ limit }} characters',
-
+                    ]),
+                    new Assert\Regex([
+                        "pattern" => "/\d/",
+                        "match" => false,
+                        "message" => "Your Last name cannot contain a number"
                     ]),
                 ],
             ])
@@ -63,6 +67,11 @@ class RegistrationFormType extends AbstractType
                         'maxMessage' => 'Your lastname should be maximum {{ limit }} characters',
 
                     ]),
+                    new Assert\Regex([
+                            "pattern" => "/\d/",
+                            "match" => false,
+                            "message" => "Your Last name cannot contain a number"
+                        ]),
                 ],
             ])
             ->add('mail', EmailType::class, [
@@ -94,10 +103,13 @@ class RegistrationFormType extends AbstractType
                     new Length([
                         'min' => 8,
                         'max' => 50,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
                         // max length allowed by Symfony for security reasons
-                        'max' => 50,
                         'maxMessage' => 'Your password should be maximum {{ limit }} characters',
+                    ]),
+                    new Assert\Regex([
+                      "pattern" => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/",
+                      "match" => true,
+                      "message" => "Your password should have at least 8 characters, 1 digit, 1 uppercase and 1 lowercase"
                     ]),
                 ],
                 'invalid_message' => 'Passwords don\'t match'
