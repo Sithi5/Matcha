@@ -82,14 +82,12 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $resentMailRegister = false;
-
-
+    private $resentMailPassword = false;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $resentMailPassword = false;
+    private $resentMailRegisterTime;
 
     public function getId(): ?int
     {
@@ -248,18 +246,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getResentMailRegister(): ?bool
-    {
-        return $this->resentMailRegister;
-    }
-
-    public function setResentMailRegister(?bool $resentMailRegister): self
-    {
-        $this->resentMailRegister = $resentMailRegister;
-
-        return $this;
-    }
-
     public function getTokenPassword(): ?string
     {
         return $this->tokenPassword;
@@ -280,6 +266,18 @@ class User implements UserInterface
     public function setResentMailPassword(?bool $resentMailPassword): self
     {
         $this->resentMailPassword = $resentMailPassword;
+
+        return $this;
+    }
+
+    public function getResentMailRegisterTime(): ?\DateTimeInterface
+    {
+        return $this->resentMailRegisterTime;
+    }
+
+    public function setResentMailRegisterTime(?\DateTimeInterface $resentMailRegisterTime): self
+    {
+        $this->resentMailRegisterTime = $resentMailRegisterTime;
 
         return $this;
     }

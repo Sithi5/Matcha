@@ -51,6 +51,7 @@ class RegistrationController extends AbstractController
             );
             //set token for account confirmation and set account to not confirmed
             $user->setToken(hash('md5', random_bytes(10)));
+            $user->setResentMailRegisterTime(new \DateTime('now'));
             $user->setConfirmed(false);
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -114,11 +115,20 @@ class RegistrationController extends AbstractController
     public function registerResentMail(\Swift_Mailer $mailer)
     {
 
-
-        if (($user = $this->getUser()) && !$user->getConfirmed() && !$user->getResentMailRegister())
+        if (($user = $this->getUser()) && !$user->getConfirmed())
         {
             //ensure that user can't spam email resent
-            $user->setResentMailRegister(true);
+            $lastMailSend = $user->getResentMailRegisterTime();
+            $now = new \Datetime('now');
+            $minutes = abs($lastMailSend->getTimestamp() - $now->getTimestamp()) / 60;
+
+            if ($minutes < 1)
+            {
+                $this->addFlash('error', 'We already resend an email. Please check your spam or wait 1 mins before sending again.');
+                return $this->redirectToRoute('home');
+            }
+
+            $user->setResentMailRegisterTime(new \DateTime('now'));
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
