@@ -3,11 +3,10 @@
 namespace App\Controller;
 
 //symfony component
-use App\Security\LoginFormAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -16,17 +15,27 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Entity\User;
 
 //form
+use App\Form\RegistrationFormType;
+use App\Security\LoginFormAuthenticator;
 use App\Form\ResetPasswordType;
 
 
 class EditUserController extends AbstractController
 {
+
+    /**
+     * @Route("/edituser", name="app_edituser")
+     */
+    public function editUser(Request $request): Response
+    {
+        return $this->redirectToRoute('home');
+    }
+
     /**
      * @Route("/forgottenpassword", name="app_forgotten_password")
      */
     public function forgottenPassword(Request $request, \Swift_Mailer $mailer): Response
     {
-
         if ($this->getUser()) {
             $this->addFlash('error', 'You are logged in.');
             return $this->redirectToRoute('home');
@@ -65,9 +74,11 @@ class EditUserController extends AbstractController
         return $this->render('edit_user/forgotten_password.html.twig');
     }
 
+
+
     private function registerPasswordMail(\Swift_Mailer $mailer, string $token, string $usermail, string $name)
     {
-        $message = (new \Swift_Message('Finish your inscription'))
+        $message = (new \Swift_Message('Recover your account'))
                 ->setFrom('admin@startsys.com')
                 ->setTo($usermail)
                 ->setBody(
@@ -86,7 +97,7 @@ class EditUserController extends AbstractController
     }
 
     /**
-     * @Route("/resetpassword{token}", name="app_forgotten_password")
+     * @Route("/resetpassword/{token}", name="app_reset_password")
      */
     public function resetPassword(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder): Response
     {
@@ -98,16 +109,14 @@ class EditUserController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(ResetPasswordType::class);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $em->getRepository(User::class)->findOneBy(['tokenPassword' => $token]);
             if($user === null) {
-                $this->addFlash('error', 'User dont\'t exist');
+                $this->addFlash('error', 'User not found');
                 return $this->redirectToRoute('home');
             }
             $user->setTokenPassword(null);
-            $user->setResentMailPassword(false);
-
-            // encode the plain password
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,
@@ -115,12 +124,12 @@ class EditUserController extends AbstractController
                 )
             );
             $em->flush();
-            $this->addFlash('notice', 'Success ! Your password have been modified.');
+            $this->addFlash('notice', 'Success ! You can login now with your new password');
             return $this->redirectToRoute('home');
         }
+
         return $this->render('edit_user/reset_password.html.twig', [
             'form' => $form->createView()
         ]);
     }
-
 }

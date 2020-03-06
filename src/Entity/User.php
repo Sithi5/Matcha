@@ -70,6 +70,11 @@ class User implements UserInterface
     private $token;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tokenPassword;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private $confirmed;
@@ -79,10 +84,7 @@ class User implements UserInterface
      */
     private $resentMailRegister = false;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $tokenPassword;
+
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
