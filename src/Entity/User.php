@@ -79,6 +79,16 @@ class User implements UserInterface
      */
     private $resentMailRegister = false;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $tokenPassword;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $resentMailPassword = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -244,6 +254,30 @@ class User implements UserInterface
     public function setResentMailRegister(?bool $resentMailRegister): self
     {
         $this->resentMailRegister = $resentMailRegister;
+
+        return $this;
+    }
+
+    public function getTokenPassword(): ?string
+    {
+        return $this->tokenPassword;
+    }
+
+    public function setTokenPassword(?string $tokenPassword): self
+    {
+        $this->tokenPassword = $tokenPassword;
+
+        return $this;
+    }
+
+    public function getResentMailPassword(): ?bool
+    {
+        return $this->resentMailPassword;
+    }
+
+    public function setResentMailPassword(?bool $resentMailPassword): self
+    {
+        $this->resentMailPassword = $resentMailPassword;
 
         return $this;
     }

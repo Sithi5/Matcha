@@ -1,26 +1,59 @@
-
-.nav-btn-sign-in, .nav-btn-loggout{
-	border-color: rgb(224, 43, 200)!important ;
-	color: rgb(224, 43, 200)!important ;
+.nav-btn-sign-in,
+.nav-btn-loggout {
+    border-color: rgb(224, 43, 200)!important;
+    color: rgb(224, 43, 200)!important;
+    text-decoration: underline;
 }
 
-
-
-.nav-link-pink{
-	color: rgb(66, 66, 66) !important;
-	font-family: 'Montserrat', sans-serif;
+.nav-link-pink {
+    color: rgb(66, 66, 66) !important;
+    font-family: 'Montserrat', sans-serif;
     font-size: .9375rem;
     font-weight: 600;
 }
 
-.nav-link-pink-first{
-	margin-left: 1rem;
-	color: rgb(66, 66, 66) !important;
-	font-family: 'Montserrat', sans-serif;
+.nav-link-pink-first {
+    color: rgb(66, 66, 66) !important;
+    font-family: 'Montserrat', sans-serif;
     font-size: .9375rem;
     font-weight: 600;
 }
 
-.nav-link-pink-first:hover, .nav-link-pink:hover {
-	color: rgb(224, 43, 200) !important;
+.nav-link-pink-first:hover,
+.nav-link-pink:hover {
+    color: rgb(224, 43, 200) !important;
+}
+
+.img-dropdown-toggle {
+    width: 3rem;
+    height: 3rem;
+}
+
+.img-card-body {
+    width: 3rem;
+    height: 3rem;
+}
+
+.dropdown-menu {
+    right: 0%;
+    left: auto;
+    background-color: #f8f9fa !important;
+    border: none !important;
+    border-radius: 50%;
+}
+
+.header-card-div {
+    width: 100%;
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgb(224, 43, 200)), url('../images/koople-mypic2.jpg');
+}
+
+.card-body {
+    padding: 0;
+    background-color: #f8f9fa !important;
+}
+
+@media (min-width: 992px) {
+    .nav-link-pink-first {
+        margin-left: 1rem;
+    }
 }
