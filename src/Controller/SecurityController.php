@@ -28,6 +28,7 @@ class SecurityController extends AbstractController
      */
     public function logout()
     {
+        $this->addFlash('notice', 'You are logged out.');
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
 }

@@ -10,19 +10,11 @@
 		<ul class="navbar-nav">
 
 			<li class="nav-item">
-				<a class="nav-link nav-link-pink-first" href="#why-matcha-section">Why Matcha?</a>
+				<a class="nav-link nav-link-pink-first" href="#why-matcha-section">Match</a>
 			</li>
 
 			<li class="nav-item">
-				<a class="nav-link nav-link-pink" href="#how-does-it-work-section">How does it work?</a>
-			</li>
-
-			<li class="nav-item">
-				<a class="nav-link nav-link-pink" href="#Activities-section">Activities</a>
-			</li>
-
-			<li class="nav-item">
-				<a class="nav-link nav-link-pink" href="#testimonials-section">Testimonials</a>
+				<a class="nav-link nav-link-pink-first" href="#why-matcha-section">Inbox</a>
 			</li>
 
 			{#admin part#}
@@ -45,19 +37,21 @@
 					<div class="dropdown">
 
 						{#img of user trigger the dropdown menu #}
-  						<img src="images/user/default-user.png" class="dropdown-toggle img-dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  						<img src="{{ asset('images/user/default-user.png') }}" class="dropdown-toggle img-dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<div class="card card-user" style="width: 18rem; border: none;">
 								<div class="card-body text-center">
 									<div class="header-card-div">
-	  									<img src="images/user/default-user.png" class="img-card-body" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  									<img src="{{ asset('images/user/default-user.png') }}" class="img-card-body" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								    	<h5 class="card-title">{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {{name}}{% endif %}</h5>
 									</div>
 								</div>
+								{% if confirmed is same as(true) %}
 								<div class="card-body text-center">
 									<a href="#" > your match </a>
 								</div>
+								{% endif %}
 								<div class="card-footer">
 									<div class="row">
 										<a class="nav-btn-loggout dropdown-item col-sm" href="{{ path('app_logout') }}">sign out</a>

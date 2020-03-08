@@ -20,6 +20,7 @@ require('popper.js');
 require('../css/home-index.css');
 require('../css/navbar.css');
 require('../css/register-login.css');
+require('../css/social-media-icons.css');
 
 //my personnal js
 require('./register.js')

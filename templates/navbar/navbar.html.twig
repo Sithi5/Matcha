@@ -45,24 +45,60 @@
 					<div class="dropdown">
 
 						{#img of user trigger the dropdown menu #}
-  						<img src="images/user/default-user.png" class="dropdown-toggle img-dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  						<img src="{{ asset('images/user/default-user.png') }}" class="dropdown-toggle img-dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<div class="card card-user" style="width: 18rem; border: none;">
+							<div class="card card-user">
 								<div class="card-body text-center">
 									<div class="header-card-div">
-	  									<img src="images/user/default-user.png" class="img-card-body" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								    	<h5 class="card-title">{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {{name}}{% endif %}</h5>
+										<ul class="menu-user">
+	  										<img src="{{ asset('images/user/default-user.png') }}" class="img-card-body" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										</ul>
+
+										<ul class="menu-user">
+								    		<p class="card-title text-user-card-title">{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {{name}}{% endif %}</p>
+										</ul>
+
+										<ul class="menu-user">
+											<a class="text-user-card"> test </a>
+										</ul>
+
+										<ul class="menu-user">
+											<a class="text-user-card"> test </a>
+										</ul>
+
+										<ul class="menu-user">
+											<a class="text-user-card"> test </a>
+										</ul>
+
+										<ul class="menu-user">
+											<a class="text-user-card"> test </a>
+										</ul>
+
+										<ul class="menu-user">
+											<a class="text-user-card" href="{{ path('app_edituser') }}">edit your profile</a>
+										</ul>
+
+										<ul class="menu-user">
+											<a class="text-user-card" href="{{ path('app_logout') }}">sign out</a>
+										</ul>
+
 									</div>
 								</div>
+								{% if confirmed is same as(true) %}
 								<div class="card-body text-center">
 									<a href="#" > your match </a>
 								</div>
+								{% endif %}
+
 								<div class="card-footer">
-									<div class="row">
-										<a class="nav-btn-loggout dropdown-item col-sm" href="{{ path('app_logout') }}">sign out</a>
-										<a class="nav-btn-loggout dropdown-item col-sm" href="{{ path('app_edituser') }}">edit your profile</a>
-									</div>
+									<div class="row text-center">
+   											<div class="col-sm">
+												<a href="https://www.facebook.com/" class="fa fa-facebook"></a>
+											</div>
+											<div class="col-sm">
+												<a href="https://www.twitter.com/" class="fa fa-twitter"></a>
+											</div>
 								</div>
 							</div>
 						</div>
