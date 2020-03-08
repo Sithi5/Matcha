@@ -28,7 +28,16 @@ class EditUserController extends AbstractController
      */
     public function editUser(Request $request): Response
     {
-        return $this->render('edit_user/edit_user.html.twig');
+        if (!($user = $this->getUser())) {
+            $this->addFlash('error', 'You need to be logged in to see this page');
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('edit_user/edit_user.html.twig', [
+            'controller_name' => 'HomeController',
+            'name' => $user->getName(),
+            'confirmed' => $user->getConfirmed(),
+        ]);
     }
 
     /**

@@ -4,6 +4,10 @@
 
 {% set fromModal = true %}
   {{ parent() }}
+  {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and confirmed %}
+    <script>window.location.replace("{{ path('confirmed_home') }}")</script>
+  {% endif %}
+
   {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and not confirmed %}
 		<div class="alert alert-primary" style="margin-bottom: 0;">
     		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
