@@ -12,7 +12,7 @@ class ConfirmedHomeController extends AbstractController
      */
     public function index()
     {
-        If (!($user = $this->getUser()))
+        if (!($user = $this->getUser()) || !$user->getConfirmed())
         {
             $this->addFlash('error', 'You need to be logged in and have a confirmed account to see this page.');
             return $this->redirectToRoute('home');

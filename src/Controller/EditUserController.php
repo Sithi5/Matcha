@@ -28,8 +28,9 @@ class EditUserController extends AbstractController
      */
     public function editUser(Request $request): Response
     {
-        if (!($user = $this->getUser())) {
-            $this->addFlash('error', 'You need to be logged in to see this page');
+        if (!($user = $this->getUser()) || !$user->getConfirmed())
+        {
+            $this->addFlash('error', 'You need to be logged in and confirmed to see this page.');
             return $this->redirectToRoute('home');
         }
 
