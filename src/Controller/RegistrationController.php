@@ -51,7 +51,10 @@ class RegistrationController extends AbstractController
             );
             //set token for account confirmation and set account to not confirmed
             $user->setToken(hash('md5', random_bytes(10)));
-            $user->setResentMailRegisterTime(new \DateTime('now'));
+            $date = new \DateTime('now');
+            $date->modify('-1 minutes');
+            $user->setResentMailRegisterTime($date);
+            $user->setResentMailPasswordTime($date);
             $user->setConfirmed(false);
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -157,7 +160,7 @@ class RegistrationController extends AbstractController
             $user->setConfirmed(true);
             $manager->persist($user);
             $manager->flush();
-            $this->addFlash('notice', 'Your account is now confirmed ' . $name . '.');
+            $this->addFlash('notice', 'Your account is now confirmed ' . $name . '. You can now start adding pictures in your profile and start matching people.');
             return $this->redirectToRoute('home');
         }
 

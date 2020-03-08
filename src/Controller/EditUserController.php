@@ -48,26 +48,28 @@ class EditUserController extends AbstractController
                 $this->addFlash('error', 'utilisateur non trouvé');
                 return $this->redirectToRoute('app_forgotten_password');
             }
-            if ($user->getResentMailPassword() === true)
+
+            //ensure that user can't spam email resent
+            $lastMailSend = $user->getResentMailPasswordTime();
+            $now = new \Datetime('now');
+            $minutes = abs($lastMailSend->getTimestamp() - $now->getTimestamp()) / 60;
+            if ($minutes < 1)
             {
                 $this->addFlash('error', 'We already sent you a recovery email. Please check also your spam.');
                 return $this->render('edit_user/forgotten_password.html.twig');
             }
-            else {
-                $user->setTokenPassword(hash('md5', random_bytes(10)));
-                $token = $user->getTokenPassword();
-                $email = $user->getMail();
-                $name = $user->getName();
 
-                //sending the mail here
-                $user->setResentMailPassword(true);
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $this->registerPasswordMail($mailer, $token, $email, $name);
-                $this->addFlash('notice', 'We Sent you the recovery email.');
-                $em->flush();
-                return $this->redirectToRoute('home');
-            }
+            $user->setTokenPassword(hash('md5', random_bytes(10)));
+            $token = $user->getTokenPassword();
+            $email = $user->getMail();
+            $name = $user->getName();
+            //sending the mail here
+            $user->setResentMailPasswordTime(new \DateTime('now'));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $this->recoverPasswordMail($mailer, $token, $email, $name);
+            $this->addFlash('notice', 'We Sent you the recovery email.');
+            $em->flush();
 
             return $this->redirectToRoute('home');
         }
@@ -76,7 +78,7 @@ class EditUserController extends AbstractController
 
 
 
-    private function registerPasswordMail(\Swift_Mailer $mailer, string $token, string $usermail, string $name)
+    private function recoverPasswordMail(\Swift_Mailer $mailer, string $token, string $usermail, string $name)
     {
         $message = (new \Swift_Message('Recover your account'))
                 ->setFrom('admin@startsys.com')
@@ -107,15 +109,16 @@ class EditUserController extends AbstractController
         }
 
         $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository(User::class)->findOneBy(['tokenPassword' => $token]);
+        if($user === null) {
+            $this->addFlash('error', 'Token not valid');
+            return $this->redirectToRoute('home');
+        }
         $form = $this->createForm(ResetPasswordType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $em->getRepository(User::class)->findOneBy(['tokenPassword' => $token]);
-            if($user === null) {
-                $this->addFlash('error', 'User not found');
-                return $this->redirectToRoute('home');
-            }
+
             $user->setTokenPassword(null);
             $user->setPassword(
                 $passwordEncoder->encodePassword(
@@ -123,6 +126,7 @@ class EditUserController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+            $user->setResentMailPasswordTime(new \Datetime('now'));
             $em->flush();
             $this->addFlash('notice', 'Success ! You can login now with your new password');
             return $this->redirectToRoute('home');

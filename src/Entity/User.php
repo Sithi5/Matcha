@@ -35,6 +35,7 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotCompromisedPassword
      */
     private $password;
 
@@ -80,14 +81,24 @@ class User implements UserInterface
     private $confirmed;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $resentMailPassword = false;
+    private $resentMailPasswordTime;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $resentMailRegisterTime;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $creationDate;
+
+    public function __construct()
+    {
+        $this->setCreationDate(New \Datetime('now'));
+    }
 
     public function getId(): ?int
     {
@@ -258,14 +269,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getResentMailPassword(): ?bool
+    public function getResentMailPasswordTime(): ?\DateTimeInterface
     {
-        return $this->resentMailPassword;
+        return $this->resentMailPasswordTime;
     }
 
-    public function setResentMailPassword(?bool $resentMailPassword): self
+    public function setResentMailPasswordTime(?\DateTimeInterface $resentMailPasswordTime): self
     {
-        $this->resentMailPassword = $resentMailPassword;
+        $this->resentMailPasswordTime = $resentMailPasswordTime;
 
         return $this;
     }
@@ -278,6 +289,18 @@ class User implements UserInterface
     public function setResentMailRegisterTime(?\DateTimeInterface $resentMailRegisterTime): self
     {
         $this->resentMailRegisterTime = $resentMailRegisterTime;
+
+        return $this;
+    }
+
+    public function getCreationDate(): ?\DateTimeInterface
+    {
+        return $this->creationDate;
+    }
+
+    public function setCreationDate(\DateTimeInterface $creationDate): self
+    {
+        $this->creationDate = $creationDate;
 
         return $this;
     }
