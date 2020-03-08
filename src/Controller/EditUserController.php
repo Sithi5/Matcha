@@ -28,7 +28,7 @@ class EditUserController extends AbstractController
      */
     public function editUser(Request $request): Response
     {
-        return $this->redirectToRoute('home');
+        return $this->render('edit_user/edit_user.html.twig');
     }
 
     /**
