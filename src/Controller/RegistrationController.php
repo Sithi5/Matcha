@@ -60,7 +60,8 @@ class RegistrationController extends AbstractController
 
             //setting default profile pic
             $picture = new Picture();
-            $picture->setName('images\user\fake-avatar.png');
+            $picture->setName('default-user.png');
+            $picture->setName('images\user\default-user.png');
             $picture->setProfilePicture(true);
             $user->addPicture($picture);
 

@@ -5,6 +5,9 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+//service
+use App\Service\PictureService;
+
 class ConfirmedHomeController extends AbstractController
 {
     /**
@@ -18,18 +21,13 @@ class ConfirmedHomeController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        foreach ($user->getPictures() as $picture)
-        {
-            if ($picture->getProfilePicture() === true)
-            {
-                $profilePictureName = $picture->getName();
-            }
-        }
+        $pictureService = new PictureService();
+        $profilePictureUrl = $pictureService->getProfilePictureUrl($user);
         return $this->render('confirmed_home/index.html.twig', [
             'controller_name' => 'ConfirmedHomeController',
             'name' => $user->getName(),
             'confirmed' => $user->getConfirmed(),
-            'profilePictureName' => $profilePictureName,
+            'profilePictureUrl' => $profilePictureUrl,
         ]);
     }
 }

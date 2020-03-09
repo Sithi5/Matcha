@@ -20,9 +20,12 @@ use App\Entity\Picture;
 //form
 use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthenticator;
+use App\Form\ProfilePictureType;
 use App\Form\ResetPasswordType;
 
-
+//service
+use App\Service\PictureService;
+use App\Service\FileUploader;
 
 class EditUserController extends AbstractController
 {
@@ -154,46 +157,77 @@ class EditUserController extends AbstractController
     /**
      * @Route("/edituser/profilepicture", name="app_edituser_profilepicture")
      */
-    // public function profilePicture(Request $request)
-    // {
-    //     $product = new Picture();
-    //     $form = $this->createForm(PictureType::class, $product);
-    //     $form->handleRequest($request);
+    public function profilePicture(Request $request): Response
+    {
+        if (!($user = $this->getUser()) || !$user->getConfirmed())
+        {
+            $this->addFlash('error', 'You need to be logged in and confirmed to change your profile picture.');
+            return $this->redirectToRoute('home');
+        }
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         /** @var UploadedFile $brochureFile */
-    //         $brochureFile = $form->get('brochure')->getData();
+        $picture = new Picture();
+        $pictureService = new PictureService();
+        $picture->setUser($user);
+        $form = $this->createForm(ProfilePictureType::class, $picture);
+        $form->handleRequest($request);
 
-    //         // this condition is needed because the 'brochure' field is not required
-    //         // so the PDF file must be processed only when a file is uploaded
-    //         if ($brochureFile) {
-    //             $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-    //             // this is needed to safely include the file name as part of the URL
-    //             $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-    //             $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $targetDirectory = "images/user/".md5($user->getId()).'/';
+            $file = $form->get('file')->getData();
+            $fileUploader = new FileUploader($targetDirectory);
+            $fileName = $fileUploader->upload($file);
 
-    //             // Move the file to the directory where brochures are stored
-    //             try {
-    //                 $brochureFile->move(
-    //                     $this->getParameter('brochures_directory'),
-    //                     $newFilename
-    //                 );
-    //             } catch (FileException $e) {
-    //                 // ... handle exception if something happens during file upload
-    //             }
+            $picture->setName($fileName);
+            $picture->setUrl($targetDirectory . $fileName);
+            $entityManager = $this->getDoctrine()->getManager();
+            $pictureService->setNewProfilePicture($user, $picture, $entityManager);
+        }
 
-    //             // updates the 'brochureFilename' property to store the PDF file name
-    //             // instead of its contents
-    //             $product->setBrochureFilename($newFilename);
-    //         }
+        $profilePictureUrl = $pictureService->getProfilePictureUrl($user);
+        return $this->render('edit_user/edit_user_profile_picture.html.twig', [
+            'form' => $form->createView(),
+            'name' => $user->getName(),
+            'confirmed' => $user->getConfirmed(),
+            'profilePictureUrl' => $profilePictureUrl,
+        ]);
+    }
 
-    //         // ... persist the $product variable or any other work
+    /**
+    * @Route("/edituser/addpicture", name="app_edituser_addpicture")
+    */
+    public function addPicture(Request $request): Response
+    {
+        if (!($user = $this->getUser()) || !$user->getConfirmed())
+        {
+            $this->addFlash('error', 'You need to be logged in and confirmed to change your profile picture.');
+            return $this->redirectToRoute('home');
+        }
 
-    //         return $this->redirect($this->generateUrl('app_product_list'));
-    //     }
+        $picture = new Picture();
+        $picture->setUser($user);
+        $form = $this->createForm(ProfilePictureType::class, $picture);
+        $form->handleRequest($request);
 
-    //     return $this->render('product/new.html.twig', [
-    //         'form' => $form->createView(),
-    //     ]);
-    // }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form->get('file')->getData();
+            $filePath = "images/user/".md5($user->getId()).'/';
+            $fileName= md5(uniqid()).'.'.$file->guessExtension();
+            $picture->setName($fileName);
+
+            $file->move($filePath, $fileName);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($picture);
+            $entityManager->flush();
+        }
+
+        $pictureService = new PictureService();
+        $profilePictureUrl = $pictureService->getProfilePictureUrl($user);
+        return $this->render('edit_user/edit_user_profile_picture.html.twig', [
+            'form' => $form->createView(),
+            'name' => $user->getName(),
+            'confirmed' => $user->getConfirmed(),
+            'profilePictureUrl' => $profilePictureUrl,
+        ]);
+    }
 }
