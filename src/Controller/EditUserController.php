@@ -10,14 +10,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 //entity
 use App\Entity\User;
+use App\Entity\Picture;
 
 //form
 use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthenticator;
 use App\Form\ResetPasswordType;
+
 
 
 class EditUserController extends AbstractController
@@ -146,4 +150,50 @@ class EditUserController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/edituser/profilepicture", name="app_edituser_profilepicture")
+     */
+    // public function profilePicture(Request $request)
+    // {
+    //     $product = new Picture();
+    //     $form = $this->createForm(PictureType::class, $product);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         /** @var UploadedFile $brochureFile */
+    //         $brochureFile = $form->get('brochure')->getData();
+
+    //         // this condition is needed because the 'brochure' field is not required
+    //         // so the PDF file must be processed only when a file is uploaded
+    //         if ($brochureFile) {
+    //             $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+    //             // this is needed to safely include the file name as part of the URL
+    //             $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+    //             $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
+
+    //             // Move the file to the directory where brochures are stored
+    //             try {
+    //                 $brochureFile->move(
+    //                     $this->getParameter('brochures_directory'),
+    //                     $newFilename
+    //                 );
+    //             } catch (FileException $e) {
+    //                 // ... handle exception if something happens during file upload
+    //             }
+
+    //             // updates the 'brochureFilename' property to store the PDF file name
+    //             // instead of its contents
+    //             $product->setBrochureFilename($newFilename);
+    //         }
+
+    //         // ... persist the $product variable or any other work
+
+    //         return $this->redirect($this->generateUrl('app_product_list'));
+    //     }
+
+    //     return $this->render('product/new.html.twig', [
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
 }

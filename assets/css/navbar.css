@@ -27,9 +27,11 @@
 .img-dropdown-toggle {
     width: 3rem;
     height: 3rem;
+    border-radius: 50%;
 }
 
 .img-card-body {
+    border-radius: 50%;
     width: 80px;
     height: 80px;
     margin: auto auto 13px;

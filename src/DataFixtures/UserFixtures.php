@@ -7,6 +7,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 //Entity
 use App\Entity\User;
+use App\Entity\Picture;
 //Entity
 
 //Password encoder
@@ -24,6 +25,9 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $user = new User();
+        $picture = new Picture();
+        $picture->setName('images\user\maga\maga.jpg');
+        $picture->setProfilePicture(true);
         $user->setName('root');
         $user->setLastname('root');
         $user->setRoles(['ROLE_ADMIN']);
@@ -32,6 +36,7 @@ class UserFixtures extends Fixture
         $user->setBirthDate(new \DateTime('1995-12-21'));
         $user->setGender('man');
         $user->setConfirmed(true);
+        $user->addPicture($picture);
         $manager->persist($user);
         $password="root";
 

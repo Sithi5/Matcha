@@ -13,6 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 //entity
 use App\Entity\User;
+use App\Entity\Picture;
 
 //form
 use App\Form\RegistrationFormType;
@@ -56,6 +57,12 @@ class RegistrationController extends AbstractController
             $user->setResentMailRegisterTime($date);
             $user->setResentMailPasswordTime($date);
             $user->setConfirmed(false);
+
+            //setting default profile pic
+            $picture = new Picture();
+            $picture->setName('images\user\fake-avatar.png');
+            $picture->setProfilePicture(true);
+            $user->addPicture($picture);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
