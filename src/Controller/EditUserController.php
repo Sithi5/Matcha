@@ -26,9 +26,17 @@ use App\Form\ResetPasswordType;
 //service
 use App\Service\PictureService;
 use App\Service\FileUploader;
+use Doctrine\ORM\EntityManager;
 
 class EditUserController extends AbstractController
 {
+    private $em;
+    private $pictureService;
+
+    public function __construct()
+    {
+        $this->pictureService = new PictureService();
+    }
 
     /**
      * @Route("/edituser", name="app_edituser")
@@ -41,10 +49,12 @@ class EditUserController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        $profilePictureUrl = $this->pictureService->getProfilePictureUrl($user);
         return $this->render('edit_user/edit_user.html.twig', [
             'controller_name' => 'HomeController',
             'name' => $user->getName(),
             'confirmed' => $user->getConfirmed(),
+            'profilePictureUrl' => $profilePictureUrl,
         ]);
     }
 
@@ -59,8 +69,8 @@ class EditUserController extends AbstractController
         }
 
         if($request->isMethod('POST')) {
-            $email = $request->get('email');
-            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['mail' => $email]);
+            $this->email = $request->get('email');
+            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['mail' => $this->email]);
             if($user === null) {
                 $this->addFlash('error', 'utilisateur non trouvé');
                 return $this->redirectToRoute('app_forgotten_password');
@@ -78,13 +88,13 @@ class EditUserController extends AbstractController
 
             $user->setTokenPassword(hash('md5', random_bytes(10)));
             $token = $user->getTokenPassword();
-            $email = $user->getMail();
+            $this->email = $user->getMail();
             $name = $user->getName();
             //sending the mail here
             $user->setResentMailPasswordTime(new \DateTime('now'));
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
-            $this->recoverPasswordMail($mailer, $token, $email, $name);
+            $this->recoverPasswordMail($mailer, $token, $this->email, $name);
             $this->addFlash('notice', 'We Sent you the recovery email.');
             $em->flush();
 
@@ -125,8 +135,7 @@ class EditUserController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $em = $this->getDoctrine()->getManager();
-        $user = $em->getRepository(User::class)->findOneBy(['tokenPassword' => $token]);
+        $user = $this->em->getRepository(User::class)->findOneBy(['tokenPassword' => $token]);
         if($user === null) {
             $this->addFlash('error', 'Token not valid');
             return $this->redirectToRoute('home');
@@ -144,6 +153,7 @@ class EditUserController extends AbstractController
                 )
             );
             $user->setResentMailPasswordTime(new \Datetime('now'));
+            $em = $this->getDoctrine()->getManager();
             $em->flush();
             $this->addFlash('notice', 'Success ! You can login now with your new password');
             return $this->redirectToRoute('home');
@@ -166,7 +176,7 @@ class EditUserController extends AbstractController
         }
 
         $picture = new Picture();
-        $pictureService = new PictureService();
+        $pictureService = $this->pictureService;
         $picture->setUser($user);
         $form = $this->createForm(ProfilePictureType::class, $picture);
         $form->handleRequest($request);
@@ -179,8 +189,8 @@ class EditUserController extends AbstractController
 
             $picture->setName($fileName);
             $picture->setUrl($targetDirectory . $fileName);
-            $entityManager = $this->getDoctrine()->getManager();
-            $pictureService->setNewProfilePicture($user, $picture, $entityManager);
+            $em = $this->getDoctrine()->getManager();
+            $pictureService->setNewProfilePicture($user, $picture, $em);
         }
 
         $profilePictureUrl = $pictureService->getProfilePictureUrl($user);
@@ -216,13 +226,12 @@ class EditUserController extends AbstractController
 
             $file->move($filePath, $fileName);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($picture);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($picture);
+            $em->flush();
         }
 
-        $pictureService = new PictureService();
-        $profilePictureUrl = $pictureService->getProfilePictureUrl($user);
+        $profilePictureUrl = $this->pictureService->getProfilePictureUrl($user);
         return $this->render('edit_user/edit_user_profile_picture.html.twig', [
             'form' => $form->createView(),
             'name' => $user->getName(),

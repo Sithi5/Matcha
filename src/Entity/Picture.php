@@ -5,8 +5,13 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Exception\ExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PictureRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Picture
 {
@@ -41,6 +46,8 @@ class Picture
      * @ORM\Column(type="string", length=255)
      */
     private $url;
+
+    private $tempUrl;
 
     public function getId(): ?int
     {
@@ -107,4 +114,20 @@ class Picture
         return $this;
     }
 
+
+    public function preRemoveUpload()
+    {
+        //save url before removing it from db
+        $this->tempUrl = $this->getUrl();
+    }
+
+
+    public function removeUpload()
+    {
+        //actually deleting the file
+		$filesystem = new Filesystem();
+        if (file_exists($this->tempUrl) && $this->tempUrl != 'images\user\default-user.png') {
+            $filesystem->remove([$this->tempUrl]);
+      }
+    }
 }

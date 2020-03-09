@@ -27,7 +27,7 @@ class UserFixtures extends Fixture
         $user = new User();
         $picture = new Picture();
         $picture->setName('maga.jpg');
-        $picture->setUrl('images\user\maga\maga.jpg');
+        $picture->setUrl('images\user\default-user.png');
         $picture->setProfilePicture(true);
         $user->setName('root');
         $user->setLastname('root');
