@@ -1,0 +1,17 @@
+.panel-body .btn:not(.btn-block) {
+    width: 120px;
+    margin-bottom: 10px;
+}
+
+.panel-primary {
+    background-color: rgb(83, 70, 87);
+    width: 100%;
+}
+
+.panel-heading {
+    background-color: #17a2b8;
+}
+
+.panel-title {
+    color: white;
+}

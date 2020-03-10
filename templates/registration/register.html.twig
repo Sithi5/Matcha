@@ -1,0 +1,33 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+  Register
+{% endblock %}
+
+{% block body %}
+
+{% if not fromModal is defined %}
+	{#navbar #}
+	{{ include("navbar/navbar.html.twig") }}
+	{#navbar #}
+{% endif %}
+  <div class="container register-form">
+    {# content #}
+    <div class="text-center" style="color: #757575;">
+      <div class="card-register">
+        <h5 class="card-header info-color white-text text-center py-4">
+          <strong>Tell us about you</strong>
+        </h5>
+        <div class="card-body px-lg-5 pt-0">
+          {{ form_start(registrationForm, {'attr': {'id': 'modal_form_register'}, 'action': path('app_register', {
+                    'fromModal': true,
+                  }
+                  )}) }}
+            {{ include('registration/register-form-content.html.twig') }}
+          {{ form_end(registrationForm) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

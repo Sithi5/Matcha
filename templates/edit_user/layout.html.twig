@@ -1,0 +1,66 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %} {{ parent() }} Home {% endblock %}
+
+{% block body %}
+	{#navbar #}
+	{{ include("navbar/confirmed-navbar.html.twig") }}
+	{#navbar #}
+
+	{# flash notif #}
+	{% set countMessage = 0 %}
+	{% for message in app.flashes('notice') %}
+		{% set countMessage = countMessage + 1 %}
+		<div id="flash-message-div-{{ countMessage }}" class="alert alert-primary" style="margin-bottom: 0;">
+			<p class="text-capitalize text-success"> flash Message : {{ message }}
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+ 			 		<span aria-hidden="true">&times;</span>
+				</button>
+			</p>
+
+		</div>
+		<script>
+		//remove one by one flash notif display
+			setTimeout(function(){
+				document.getElementById("flash-message-div-".concat({{ countMessage }})).style.display = 'none';
+				}, 10000 + ({{ countMessage }} * 1000));
+		</script>
+	{% endfor %}
+	{#error flash notif#}
+	{% for message in app.flashes('error') %}
+		{% set countMessage = countMessage + 1 %}
+		<div id="flash-message-div-{{ countMessage }}" class="alert alert-danger" style="margin-bottom: 0;">
+			<p class="text-capitalize text-error"> flash Message : {{ message }}
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+ 			 		<span aria-hidden="true">&times;</span>
+				</button>
+			</p>
+		</div>
+		<script>
+		//remove one by one flash notif display
+			setTimeout(function(){
+				document.getElementById("flash-message-div-".concat({{ countMessage }})).style.display = 'none';
+				}, 10000 + ({{ countMessage }} * 1000));
+		</script>
+	{% endfor %}
+	{# end of flash notif #}
+
+
+
+{% endblock %}
+
+{% block footer %}
+
+<footer style="background: rgb(83, 70, 87);">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© {{ "now"|date("m/d/Y") }} Copyright:
+    <span> Malo Boucé</span>
+  </div>
+  <!-- Copyright -->
+</footer>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+{% endblock %}
