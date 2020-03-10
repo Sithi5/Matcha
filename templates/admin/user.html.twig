@@ -1,0 +1,18 @@
+{% extends './admin/layout.html.twig' %}
+
+{% block title %}Admin - user{% endblock %}
+
+
+{% block body %}
+    {{ parent() }}
+
+    <ul class="list-group">
+        {% for user in users %}
+            <li class="list-group-item">{{ user.name }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

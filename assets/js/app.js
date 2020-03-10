@@ -21,6 +21,8 @@ require('../css/home-index.css');
 require('../css/navbar.css');
 require('../css/register-login.css');
 require('../css/social-media-icons.css');
+require('../css/admin-index.css');
+require('../css/admin-user.css');
 
 //my personnal js
 require('./register.js')

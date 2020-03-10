@@ -5,6 +5,9 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+//entity
+use App\Entity\User;
+
 class AdminController extends AbstractController
 {
     /**
@@ -13,9 +16,20 @@ class AdminController extends AbstractController
     public function index()
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $user = $this->getUser();
         return $this->render('admin/index.html.twig', [
-            'name' => $user->getName(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/user", name="admin_user")
+     */
+    public function user()
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $repository = $this->getDoctrine()->getRepository(User::class);
+        $users = $repository->findAll();
+        return $this->render('admin/user.html.twig', [
+            "users" => $users,
         ]);
     }
 }
