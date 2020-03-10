@@ -26,7 +26,6 @@
           <th class="th-sm" scope="col">Confirmed</th>
           <th class="th-sm" scope="col">birthdate</th>
           <th class="th-sm" scope="col">Creation date</th>
-          <th class="th-sm" scope="col">Edit</th>
           <th class="th-sm" scope="col">Delete</th>
         </tr>
       </thead>
@@ -46,7 +45,6 @@
                 </td>
                 <td>{{ user.birthdate|date("m/d/Y") }}</td>
                 <td>{{ user.creationdate|date("m/d/Y") }}</td>
-                <td><button class="btn btn-primary">edit</button></td>
                 <td>
                     <form action="{{ path('admin_user', { 'page': page }) }}" method="post">
                         <input type="hidden" name="_method" value="DELETE"/>

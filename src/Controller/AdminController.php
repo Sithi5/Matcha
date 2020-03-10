@@ -40,7 +40,12 @@ class AdminController extends AbstractController
         }
         $repository = $this->getDoctrine()->getRepository(User::class);
         $users = $repository->findAllLimitOffset($limit, $offset);
-
+        if (!$users)
+        {
+            $page--;
+            $offset = $page * $limit;
+            $users = $repository->findAllLimitOffset($limit, $offset);
+        }
         return $this->render('admin/user.html.twig', [
             "users" => $users,
             "page" => $page,
