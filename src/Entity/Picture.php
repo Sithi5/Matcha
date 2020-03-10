@@ -136,7 +136,7 @@ class Picture
     {
         //actually deleting the file
         $filesystem = new Filesystem();
-        if (!is_file($this->tempUrl)){
+        if (!file_exists($this->tempUrl)){
             throw new \RuntimeException('Could not find the file: '.$this->tempUrl.' doesn\'t exist');
         }
         if ($this->tempUrl != 'images\user\default-user.png') {
