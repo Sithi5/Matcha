@@ -61,13 +61,13 @@ class RegistrationController extends AbstractController
             //setting default profile pic
             $picture = new Picture();
             $picture->setName('default-user.png');
-            $picture->setName('images\user\default-user.png');
+            $picture->setUrl('images\user\default-user.png');
             $picture->setProfilePicture(true);
             $user->addPicture($picture);
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
 
             // do anything else you need here, like send an email
             //sending confirmation mail here
@@ -140,9 +140,9 @@ class RegistrationController extends AbstractController
             }
 
             $user->setResentMailRegisterTime(new \DateTime('now'));
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
             //
 
             $this->registerMail($mailer, $user->getToken(), $user->getMail(), $user->getName());

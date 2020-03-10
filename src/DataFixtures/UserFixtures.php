@@ -12,7 +12,9 @@ use App\Entity\Picture;
 
 //Password encoder
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-//Password encoder
+
+//service
+use App\Service\PictureService;
 
 class UserFixtures extends Fixture
 {
@@ -26,7 +28,8 @@ class UserFixtures extends Fixture
     {
         $user = new User();
         $picture = new Picture();
-        $picture->setName('maga.jpg');
+        $pictureService = new PictureService;
+        $picture->setName('default-user.png');
         $picture->setUrl('images\user\default-user.png');
         $picture->setProfilePicture(true);
         $user->setName('root');

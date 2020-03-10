@@ -115,13 +115,18 @@ class Picture
     }
 
 
+    /**
+     * @ORM\PreRemove()
+     */
     public function preRemoveUpload()
     {
         //save url before removing it from db
         $this->tempUrl = $this->getUrl();
     }
 
-
+    /**
+     * @ORM\PostRemove()
+     */
     public function removeUpload()
     {
         //actually deleting the file

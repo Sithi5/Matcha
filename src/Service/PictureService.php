@@ -72,8 +72,8 @@ class PictureService extends AbstractController
 
 	public function removePicture(user $user, picture $picture, EntityManager $em)
 	{
-		$file = $picture->getUrl();
 		$user->removePicture($picture);
+		$em->remove($picture);
 		$em->persist($user);
 		$em->flush();
 	}
