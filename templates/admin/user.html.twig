@@ -10,6 +10,7 @@
 {% endblock %}
 
 {% block body %}
+    {{ encore_entry_script_tags('app') }}
     {{ parent() }}
     {#script for dataTables#}
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -46,7 +47,13 @@
                 <td>{{ user.birthdate|date("m/d/Y") }}</td>
                 <td>{{ user.creationdate|date("m/d/Y") }}</td>
                 <td><button class="btn btn-primary">edit</button></td>
-                <td><button class="btn btn-primary">remove</button></td>
+                <td>
+                    <form action="{{ path('admin_user', { 'page': page }) }}" method="post">
+                        <input type="hidden" name="_method" value="DELETE"/>
+                        <input type="hidden" name="id" value="{{user.id}}"/>
+                        <button class="btn btn-primary" type="submit">Delete</a>
+                    </form>
+                </td>
             </tr>
         {% endfor %}
       </tbody>
@@ -69,6 +76,9 @@
         $('#table-user').DataTable();
     } );
     </script>
+{% endblock %}
+
+{% block javascript %}
 {% endblock %}
 
 {% block footer %}

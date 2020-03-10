@@ -46,7 +46,7 @@ class UserFixtures extends Fixture
         $user->setConfirmed(true);
         $user->addPicture($picture);
         $manager->persist($user);
-        $password="root";
+        $password="Levirus35";
 
         $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
 

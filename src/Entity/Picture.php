@@ -123,7 +123,7 @@ class Picture
     /**
      * @ORM\PreRemove()
      */
-    public function preRemoveUpload()
+    public function preRemovePicture()
     {
         //save url before removing it from db
         $this->tempUrl = $this->getUrl();
@@ -132,7 +132,7 @@ class Picture
     /**
      * @ORM\PostRemove()
      */
-    public function removeUpload()
+    public function removePicture()
     {
         //actually deleting the file
         $filesystem = new Filesystem();

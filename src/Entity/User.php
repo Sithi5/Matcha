@@ -9,11 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"mail"}, message="There is already an account with this e-mail address")
  * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User extends AbstractController implements UserInterface
 {
@@ -101,6 +103,8 @@ class User extends AbstractController implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Picture", mappedBy="user", cascade={"persist", "remove"})
      */
     private $pictures;
+
+    private $tempId;
 
     public function __construct()
     {
@@ -342,5 +346,27 @@ class User extends AbstractController implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function preRemoveUser()
+    {
+        //save id before removing it from db
+        $this->tempId = $this->getId();
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        //actually deleting the img folder
+        $filesystem = new Filesystem();
+        $targetDirectory = "images/user/".md5($this->tempId).'/';
+        if (file_exists($targetDirectory)){
+            $filesystem->remove([$targetDirectory]);
+        }
     }
 }
