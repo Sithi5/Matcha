@@ -28,3 +28,4 @@ require('../css/admin-user.css');
 require('./register.js')
 require('./login.js')
 require('./labelFloat.js')
+require('./adminUser.js')
