@@ -28,10 +28,10 @@ class UserFixtures extends Fixture
     {
         $user = new User();
         $picture = new Picture();
-        $pictureService = new PictureService;
         $picture->setName('default-user.png');
         $picture->setUrl('images\user\default-user.png');
         $picture->setProfilePicture(true);
+		$picture->setUseAS("profilePicture");
         $user->setName('root');
         $user->setLastname('root');
         $user->setRoles(['ROLE_ADMIN']);

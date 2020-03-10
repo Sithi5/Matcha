@@ -63,6 +63,7 @@ class RegistrationController extends AbstractController
             $picture->setName('default-user.png');
             $picture->setUrl('images\user\default-user.png');
             $picture->setProfilePicture(true);
+		    $picture->setUseAS("profilePicture");
             $user->addPicture($picture);
 
             $em = $this->getDoctrine()->getManager();

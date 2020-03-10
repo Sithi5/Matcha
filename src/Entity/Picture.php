@@ -49,6 +49,11 @@ class Picture
 
     private $tempUrl;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $useAs;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -130,9 +135,24 @@ class Picture
     public function removeUpload()
     {
         //actually deleting the file
-		$filesystem = new Filesystem();
-        if (file_exists($this->tempUrl) && $this->tempUrl != 'images\user\default-user.png') {
+        $filesystem = new Filesystem();
+        if (!file_exists($this->tempUrl)){
+            throw new \RuntimeException('Could not find the file.');
+        }
+        if ($this->tempUrl != 'images\user\default-user.png') {
             $filesystem->remove([$this->tempUrl]);
-      }
+        }
+    }
+
+    public function getUseAs(): ?string
+    {
+        return $this->useAs;
+    }
+
+    public function setUseAs(?string $useAs): self
+    {
+        $this->useAs = $useAs;
+
+        return $this;
     }
 }

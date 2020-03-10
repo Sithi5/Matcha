@@ -26,6 +26,10 @@ class ProfilePictureType extends AbstractType
                 'constraints' => [
                     new Assert\File([
                         "maxSize" => "10000k",
+                        "mimeTypes" => [
+                            'image/*',
+                        ],
+                        "mimeTypesMessage" => "Your file {{ file }} is not an image."
                     ]),
                 ]
 

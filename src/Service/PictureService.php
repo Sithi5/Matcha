@@ -65,6 +65,7 @@ class PictureService extends AbstractController
 			}
 		}
 		$newProfilePicture->setProfilePicture(true);
+		$newProfilePicture->setUseAS("profilePicture");
 		$user->addPicture($newProfilePicture);
 		$em->persist($user);
 		$em->flush();
