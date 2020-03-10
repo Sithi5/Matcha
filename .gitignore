@@ -23,5 +23,5 @@ yarn-error.log
 
 
 ###> my git ignore ###
-.htaccess
-.env
+/.htaccess
+/.env
