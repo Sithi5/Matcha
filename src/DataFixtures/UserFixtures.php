@@ -33,7 +33,7 @@ class UserFixtures extends Fixture
         $user = new User();
         $picture = new Picture();
         $picture->setName('default-user.png');
-        $picture->setUrl('images\user\default-user.png');
+        $picture->setUrl('images/user/default-user.png');
         $picture->setProfilePicture(true);
 		$picture->setUseAS("profilePicture");
         $user->setName('root');
@@ -77,7 +77,7 @@ class UserFixtures extends Fixture
             $user = new User();
             $picture = new Picture();
             $picture->setName('default-user.png');
-            $picture->setUrl('images\user\default-user.png');
+            $picture->setUrl('images/user/default-user.png');
             $picture->setProfilePicture(true);
             $picture->setUseAS("profilePicture");
             $user->setGender($gender);
