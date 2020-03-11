@@ -139,7 +139,7 @@ class Picture
         if (!file_exists(realpath($this->tempUrl))){
             throw new \RuntimeException('Could not find the file: ' . realpath($this->tempUrl) .' doesn\'t exist');
         }
-        if ($this->tempUrl != 'images\user\default-user.png') {
+        if ($this->tempUrl != 'images/user/default-user.png') {
             $filesystem->remove([$_SERVER['DOCUMENT_ROOT'].'/'.$this->tempUrl]);
         }
     }
