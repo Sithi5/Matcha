@@ -136,8 +136,8 @@ class Picture
     {
         //actually deleting the file
         $filesystem = new Filesystem();
-        if (!file_exists($_SERVER['DOCUMENT_ROOT'].'/'.$this->tempUrl)){
-            throw new \RuntimeException('Could not find the file: ' . $_SERVER['DOCUMENT_ROOT'].'/'.$this->tempUrl .' doesn\'t exist');
+        if (!file_exists(realpath($_SERVER['DOCUMENT_ROOT'].'/'.$this->tempUrl))){
+            throw new \RuntimeException('Could not find the file: ' . realpath($_SERVER['DOCUMENT_ROOT'].'/'.$this->tempUrl) .' doesn\'t exist');
         }
         if ($this->tempUrl != 'images\user\default-user.png') {
             $filesystem->remove([$_SERVER['DOCUMENT_ROOT'].'/'.$this->tempUrl]);

@@ -27,7 +27,7 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         //number of fake users
-        $count = 20;
+        $count = 0;
 
         //setting admin user
         $user = new User();
