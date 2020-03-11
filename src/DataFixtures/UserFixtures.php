@@ -27,15 +27,24 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         //number of fake users
-        $count = 0;
+        $count = 10;
+        //array of names etc for random users
+        $womenNames = ['apple', 'orange', 'citrus', 'Kimn', 'Mariana', 'Patty', 'Claudia' , 'Jelena' , 'Taria' ,'Honour', 'Lovelyn', 'Quanah', 'Petunia'];
+        $mansNames = ['Donnelly', 'Finley', 'Israel', 'Farnell', 'Celestino', 'Beecher', 'Aristides', 'Joaquin', 'Bailee', 'Rory','Washington','Babak', 'Digby'];
+        $womenOrMansNames = array_merge($womenNames, $mansNames);
+        $lastnames = ['Brown', 'Philips', 'Price', 'Bell', 'Rogers', 'Adams', 'Roberts', 'Jenkins', 'Lopez', 'Cox','Campbell','Peterson','Sanchez', 'Jones', 'Davis', 'Wood', 'Smith', 'Mitchell', 'Jenkins' ,'Foster', 'Butler', 'Ross'];
+        $genders = ['man', 'women', 'neither'];
+        $womenPictures = ['images/user/FixtureLoadUsers/woman_pic_1.png', 'images/user/FixtureLoadUsers/woman_pic_2.png', 'images/user/FixtureLoadUsers/woman_pic_3.jpg', 'images/user/FixtureLoadUsers/woman_pic_4.jpg', 'images/user/FixtureLoadUsers/woman_pic_5.jpg'];
+        $womanPicture = $womenPictures[array_rand($womenPictures)];
 
         //setting admin user
         $user = new User();
         $picture = new Picture();
-        $picture->setName('default-user.png');
-        $picture->setUrl('images/user/default-user.png');
+        $picture->setName($womanPicture);
+        $picture->setUrl($womanPicture);
         $picture->setProfilePicture(true);
-		$picture->setUseAS("profilePicture");
+        $picture->setUseAS("profilePicture");
+        $picture->setDefaultPicture(true);
         $user->setName('root');
         $user->setLastname('root');
         $user->setRoles(['ROLE_ADMIN']);
@@ -50,36 +59,34 @@ class UserFixtures extends Fixture
 
         $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
 
-        //array of names etc for random users
-        $girlsNames = ['apple', 'orange', 'citrus', 'Kimn', 'Mariana', 'Patty', 'Claudia' , 'Jelena' , 'Taria' ,'Honour', 'Lovelyn', 'Quanah', 'Petunia'];
-        $mansNames = ['Donnelly', 'Finley', 'Israel', 'Farnell', 'Celestino', 'Beecher', 'Aristides', 'Joaquin', 'Bailee', 'Rory','Washington','Babak', 'Digby'];
-        $girlsOrMansNames = array_merge($girlsNames, $mansNames);
-        $lastnames = ['Brown', 'Philips', 'Price', 'Bell', 'Rogers', 'Adams', 'Roberts', 'Jenkins', 'Lopez', 'Cox','Campbell','Peterson','Sanchez', 'Jones', 'Davis', 'Wood', 'Smith', 'Mitchell', 'Jenkins' ,'Foster', 'Butler', 'Ross'];
-        $genders = ['man', 'woman', 'neither'];
+
 
         //random users
         while($count-- > 0){
             $gender = $genders[array_rand($genders)];
+            $womanPicture = $womenPictures[array_rand($womenPictures)];
+            $manPicture = $womenPictures[array_rand($womenPictures)];
 
             //change name depending on gender
             if ($gender == 'man')
             {
                 $name = $mansNames[array_rand($mansNames)];
             }
-            else if ($gender == 'woman')
+            else if ($gender == 'women')
             {
-                $name = $girlsNames[array_rand($girlsNames)];
+                $name = $womenNames[array_rand($womenNames)];
             }
             else {
-                $name = $girlsOrMansNames[array_rand($girlsOrMansNames)];
+                $name = $womenOrMansNames[array_rand($womenOrMansNames)];
             }
             $lastname = $lastnames[array_rand($lastnames)];
             $user = new User();
             $picture = new Picture();
-            $picture->setName('default-user.png');
-            $picture->setUrl('images/user/default-user.png');
+            $picture->setName($womanPicture);
+            $picture->setUrl($womanPicture);
             $picture->setProfilePicture(true);
             $picture->setUseAS("profilePicture");
+            $picture->setDefaultPicture(true);
             $user->setGender($gender);
             $user->setName($name);
             $user->setLastname($lastname);

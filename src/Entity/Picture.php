@@ -54,6 +54,13 @@ class Picture
      */
     private $useAs;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $defaultPicture;
+
+    private $tempDefaultPicture;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -119,31 +126,6 @@ class Picture
         return $this;
     }
 
-
-    /**
-     * @ORM\PreRemove()
-     */
-    public function preRemovePicture()
-    {
-        //save url before removing it from db
-        $this->tempUrl = $this->getUrl();
-    }
-
-    /**
-     * @ORM\PostRemove()
-     */
-    public function removePicture()
-    {
-        //actually deleting the file
-        $filesystem = new Filesystem();
-        if (!file_exists(realpath($this->tempUrl))){
-            throw new \RuntimeException('Could not find the file: ' . realpath($this->tempUrl) .' doesn\'t exist');
-        }
-        if ($this->tempUrl != 'images/user/default-user.png') {
-            $filesystem->remove([$_SERVER['DOCUMENT_ROOT'].'/'.$this->tempUrl]);
-        }
-    }
-
     public function getUseAs(): ?string
     {
         return $this->useAs;
@@ -154,5 +136,45 @@ class Picture
         $this->useAs = $useAs;
 
         return $this;
+    }
+
+    public function getDefaultPicture(): ?bool
+    {
+        return $this->defaultPicture;
+    }
+
+    public function setDefaultPicture(?bool $defaultPicture): self
+    {
+        $this->defaultPicture = $defaultPicture;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function preRemovePicture()
+    {
+        //save url before removing it from db
+        $this->tempUrl = $this->getUrl();
+        $this->tempDefaultPicture = $this->getDefaultPicture();
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removePicture()
+    {
+        //actually deleting the file
+
+        if ($this->tempDefaultPicture !== null)
+        {
+            $filesystem = new Filesystem();
+            if (!file_exists(realpath($this->tempUrl))){
+                throw new \RuntimeException('Could not find the file: ' . realpath($this->tempUrl) .' doesn\'t exist');
+            }
+            $filesystem->remove([realpath($this->tempUrl)]);
+        }
+
     }
 }
