@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 //entity
@@ -26,16 +27,18 @@ use App\Form\ResetPasswordType;
 //service
 use App\Service\PictureService;
 use App\Service\FileUploader;
-use Doctrine\ORM\EntityManager;
+use App\Service\NavUserForView;
 
 class EditUserController extends AbstractController
 {
     private $em;
     private $pictureService;
+    private $navUserForView;
 
     public function __construct()
     {
         $this->pictureService = new PictureService();
+        $this->navUserForView = new NavUserForView;
     }
 
     /**
@@ -43,19 +46,13 @@ class EditUserController extends AbstractController
      */
     public function editUser(Request $request): Response
     {
-        if (!($user = $this->getUser()) || !$user->getConfirmed())
+        if (!($navUser = $this->getUser()) || !$navUser->getConfirmed())
         {
             $this->addFlash('error', 'You need to be logged in and confirmed to see this page.');
             return $this->redirectToRoute('home');
         }
 
-        $profilePictureUrl = $this->pictureService->getProfilePictureUrl($user);
-        return $this->render('edit_user/edit_user.html.twig', [
-            'controller_name' => 'HomeController',
-            'name' => $user->getName(),
-            'confirmed' => $user->getConfirmed(),
-            'profilePictureUrl' => $profilePictureUrl,
-        ]);
+        return $this->render('edit_user/edit_user.html.twig', $this->navUserForView->OutputNavUserInfo($navUser));
     }
 
     /**
@@ -169,20 +166,20 @@ class EditUserController extends AbstractController
      */
     public function profilePicture(Request $request): Response
     {
-        if (!($user = $this->getUser()) || !$user->getConfirmed())
+        if (!($navUser = $this->getUser()) || !$navUser->getConfirmed())
         {
-            $this->addFlash('error', 'You need to be logged in and confirmed to change your profile picture.');
+            $this->addFlash('error', 'You need to be logged in and confirmed to see this page.');
             return $this->redirectToRoute('home');
         }
 
         $picture = new Picture();
         $pictureService = $this->pictureService;
-        $picture->setUser($user);
+        $picture->setUser($navUser);
         $form = $this->createForm(ProfilePictureType::class, $picture);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $targetDirectory = "images/user/".md5($user->getId()).'/';
+            $targetDirectory = "images/user/".md5($navUser->getId()).'/';
             $file = $form->get('file')->getData();
             $fileUploader = new FileUploader($targetDirectory);
             $fileName = $fileUploader->upload($file);
@@ -190,16 +187,14 @@ class EditUserController extends AbstractController
             $picture->setName($fileName);
             $picture->setUrl($targetDirectory . $fileName);
             $em = $this->getDoctrine()->getManager();
-            $pictureService->setNewProfilePicture($user, $picture, $em);
+            $pictureService->setNewProfilePicture($navUser, $picture, $em);
         }
 
-        $profilePictureUrl = $pictureService->getProfilePictureUrl($user);
-        return $this->render('edit_user/edit_user_profile_picture.html.twig', [
+
+        return $this->render('edit_user/edit_user_profile_picture.html.twig', array_merge([
             'form' => $form->createView(),
-            'name' => $user->getName(),
-            'confirmed' => $user->getConfirmed(),
-            'profilePictureUrl' => $profilePictureUrl,
-        ]);
+        ], $this->navUserForView->OutputNavUserInfo($navUser))
+        );
     }
 
     /**
@@ -207,36 +202,16 @@ class EditUserController extends AbstractController
     */
     public function addPicture(Request $request): Response
     {
-        if (!($user = $this->getUser()) || !$user->getConfirmed())
+        if (!($navUser = $this->getUser()) || !$navUser->getConfirmed())
         {
-            $this->addFlash('error', 'You need to be logged in and confirmed to change your profile picture.');
+            $this->addFlash('error', 'You need to be logged in and confirmed to see this page.');
             return $this->redirectToRoute('home');
         }
-
-        $picture = new Picture();
-        $picture->setUser($user);
-        $form = $this->createForm(ProfilePictureType::class, $picture);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $file = $form->get('file')->getData();
-            $filePath = "images/user/".md5($user->getId()).'/';
-            $fileName= md5(uniqid()).'.'.$file->guessExtension();
-            $picture->setName($fileName);
-
-            $file->move($filePath, $fileName);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($picture);
-            $em->flush();
-        }
-
-        $profilePictureUrl = $this->pictureService->getProfilePictureUrl($user);
+        $navUserProfilePictureUrl = $this->pictureService->getProfilePictureUrl($navUser);
         return $this->render('edit_user/edit_user_profile_picture.html.twig', [
-            'form' => $form->createView(),
-            'name' => $user->getName(),
-            'confirmed' => $user->getConfirmed(),
-            'profilePictureUrl' => $profilePictureUrl,
+            'navUserName' => $navUser->getName(),
+            'navUserConfirmed' => $navUser->getConfirmed(),
+            'navUserProfilePictureUrl' => $navUserProfilePictureUrl,
         ]);
     }
 }

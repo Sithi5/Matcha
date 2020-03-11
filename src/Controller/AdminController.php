@@ -8,19 +8,32 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+//service
+use App\Service\PictureService;
+
 //entity
 use App\Entity\User;
+use App\Service\NavUserForView;
 
 class AdminController extends AbstractController
 {
+    private $pictureService;
+    private $navUserForView;
+
+    public function __construct()
+    {
+        $this->pictureService = new PictureService();
+        $this->navUserForView = new NavUserForView;
+    }
     /**
      * @Route("/admin", name="admin")
      */
     public function index()
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        return $this->render('admin/index.html.twig', [
-        ]);
+
+        $navUser = $this->getUser();
+        return $this->render('admin/index.html.twig', $this->navUserForView->OutputNavUserInfo($navUser));
     }
 
     /**
@@ -46,10 +59,13 @@ class AdminController extends AbstractController
             $offset = $page * $limit;
             $users = $repository->findAllLimitOffset($limit, $offset);
         }
-        return $this->render('admin/user.html.twig', [
+
+        $navUser = $this->getUser();
+        return $this->render('admin/list-user.html.twig', array_merge([
             "users" => $users,
             "page" => $page,
-        ]);
+            ], $this->navUserForView->OutputNavUserInfo($navUser))
+        );
     }
 
     public function removeUser(int $id)

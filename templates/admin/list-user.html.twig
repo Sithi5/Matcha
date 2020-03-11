@@ -34,7 +34,7 @@
             {% set count = count + 1 %}
             <tr>
                 <th scope="row">{{ count }}</th>
-                <td>{{ user.name }}</td>
+                <td><a href="{{ path('profil', { 'id': user.id }) }}">{{ user.name }}</a></td>
                 <td>{{ user.mail }}</td>
                 <td>
                     {% if user.Confirmed is same as(true) %}

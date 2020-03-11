@@ -7,24 +7,28 @@ use Symfony\Component\Routing\Annotation\Route;
 
 //service
 use App\Service\PictureService;
+use App\Service\NavUserForView;
 
 class HomeController extends AbstractController
 {
+
+    private $pictureService;
+    private $navUserForView;
+
+    public function __construct()
+    {
+        $this->pictureService = new PictureService();
+        $this->navUserForView = new NavUserForView;
+    }
+
     /**
      * @Route("/", name="home")
      */
     public function index()
     {
-        if (($user = $this->getUser()))
+        if (($navUser = $this->getUser()))
         {
-            $pictureService = new PictureService();
-            $profilePictureUrl = $pictureService->getProfilePictureUrl($user);
-            return $this->render('home/index.html.twig', [
-                'controller_name' => 'HomeController',
-                'name' => $user->getName(),
-                'confirmed' => $user->getConfirmed(),
-                'profilePictureUrl' => $profilePictureUrl,
-            ]);
+            return $this->render('home/index.html.twig', $this->navUserForView->OutputNavUserInfo($navUser));
         }
 
         return $this->render('home/index.html.twig', [

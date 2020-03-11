@@ -4,11 +4,11 @@
 
 {% set fromModal = true %}
   {{ parent() }}
-  {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and confirmed %}
+  {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and navUserConfirmed and not is_granted('ROLE_ADMIN')%}
     <script>window.location.replace("{{ path('confirmed_home') }}")</script>
   {% endif %}
 
-  {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and not confirmed %}
+  {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and not navUserConfirmed %}
 		<div class="alert alert-primary" style="margin-bottom: 0;">
     		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
  			 		<span aria-hidden="true">&times;</span>
@@ -27,7 +27,7 @@
     <div class="container">
 
       <div class="intro-text">
-        <div class="intro-lead-in">Get True Story{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {{name}}{% endif %}
+        <div class="intro-lead-in">Get True Story{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {{navUserName}}{% endif %}
         </div>
         <div class="intro-heading text-uppercase">
           <span class="Text-Pink">Ma</span><span class="Text-White">tcha</span>
@@ -41,7 +41,7 @@
 
   </header>
 
-  {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') or not confirmed %}
+  {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') or not navUserConfirmed %}
     {{ include('home/index-not-confirmed.html.twig') }}
   {% endif %}
 {% endblock %}

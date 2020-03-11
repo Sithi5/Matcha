@@ -1,0 +1,12 @@
+{#admin part#}
+{% if is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_ADMIN') %}
+	<li class="nav-item">
+		<a class="nav-link nav-link-admin" href="/admin">Admin</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link nav-link-admin" href="/">Home</a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link nav-link-admin" href="/confirmed/home">Confirmed Home</a>
+	</li>
+{% endif %}
