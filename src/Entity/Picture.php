@@ -61,6 +61,11 @@ class Picture
 
     private $tempDefaultPicture;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $coverPicture;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -176,5 +181,17 @@ class Picture
             $filesystem->remove([realpath($this->tempUrl)]);
         }
 
+    }
+
+    public function getCoverPicture(): ?bool
+    {
+        return $this->coverPicture;
+    }
+
+    public function setCoverPicture(?bool $coverPicture): self
+    {
+        $this->coverPicture = $coverPicture;
+
+        return $this;
     }
 }

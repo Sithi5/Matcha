@@ -21,38 +21,66 @@ class PictureService extends AbstractController
         {
             if ($picture->getProfilePicture() === true)
             {
-                $profilePicture = $picture;
+                $profilPicture = $picture;
             }
 		}
-		if (!isset($profilePicture))
+		if (!isset($profilPicture))
 		{
             throw new \RuntimeException('Could not find the picture.');
 		}
-		return $profilePicture;
+		return $profilPicture;
+	}
+
+	public function getCoverPicture(user $user)
+	{
+		foreach ($user->getPictures() as $picture)
+        {
+            if ($picture->getCoverPicture() === true)
+            {
+                $coverPicture = $picture;
+            }
+		}
+		if (!isset($coverPicture))
+		{
+            throw new \RuntimeException('Could not find the picture.');
+		}
+		return $coverPicture;
 	}
 
 	public function getProfilePictureName(user $user)
 	{
-		$profilePicture = $this->getProfilePicture($user);
-		$profilePictureName = $profilePicture->getName();
-		if (!isset($profilePictureName))
+		$profilPicture = $this->getProfilePicture($user);
+		$profilPictureName = $profilPicture->getName();
+		if (!isset($profilPictureName))
 		{
 			//prevent error
-			$profilePictureName = 'default-user.png';
+			$profilPictureName = 'default-user.png';
 		}
-		return $profilePictureName;
+		return $profilPictureName;
 	}
 
 	public function getProfilePictureUrl(user $user)
 	{
-		$profilePicture = $this->getProfilePicture($user);
-		$profilePictureUrl = $profilePicture->getUrl();
-		if (!isset($profilePictureUrl))
+		$profilPicture = $this->getProfilePicture($user);
+		$profilPictureUrl = $profilPicture->getUrl();
+		if (!isset($profilPictureUrl))
 		{
 			//prevent error
-			$profilePictureUrl = 'images\user\default-user.png';
+			$profilPictureUrl = 'images/user/default-user.png';
 		}
-		return $profilePictureUrl;
+		return $profilPictureUrl;
+	}
+
+	public function getCoverPictureUrl(user $user)
+	{
+		$coverPicture = $this->getCoverPicture($user);
+		$coverPictureUrl = $coverPicture->getUrl();
+		if (!isset($coverPictureUrl))
+		{
+			//prevent error
+			$coverPictureUrl = 'images/user/default-cover.jpg';
+		}
+		return $coverPictureUrl;
 	}
 
 	public function setNewProfilePicture(user $user, picture $newProfilePicture, EntityManager $em)

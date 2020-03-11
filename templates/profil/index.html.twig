@@ -2,13 +2,17 @@
 
 {% block body %}
     {{ parent() }}
+<header class="profil-head" id="index-masthead">
+    <img class="profil-background-cover-photo" src="{{ asset(profilUserCoverPictureUrl) }}">
+
     <div class="container">
-        <div class="fb-profile">
-            <img align="left" class="fb-image-lg" src="{{ asset(ProfilUserProfilePictureUrl) }}" alt="Profile image example"/>
-            <div class="fb-profile-text">
-                <h1>Eli Macy</h1>
-                <p>Girls just wanna go fun.</p>
+        <div class="row">
+            <div class="col">
+                <img class="profil-profil-picture" src="{{ asset(profilUserProfilPictureUrl) }}">
             </div>
         </div>
-    </div> <!-- /container -->
+
+    </div>
+
+</header>
 {% endblock %}

@@ -24,6 +24,12 @@ class UserFixtures extends Fixture
     {
         $this->passwordEncoder = $passwordEncoder;
     }
+
+    public function addUser()
+    {
+
+    }
+
     public function load(ObjectManager $manager)
     {
         //number of fake users
@@ -35,8 +41,8 @@ class UserFixtures extends Fixture
         $lastnames = ['Brown', 'Philips', 'Price', 'Bell', 'Rogers', 'Adams', 'Roberts', 'Jenkins', 'Lopez', 'Cox','Campbell','Peterson','Sanchez', 'Jones', 'Davis', 'Wood', 'Smith', 'Mitchell', 'Jenkins' ,'Foster', 'Butler', 'Ross'];
         $genders = ['man', 'woman', 'neither'];
         $womenPictures = ['images/user/FixtureLoadUsers/woman_pic_1.png', 'images/user/FixtureLoadUsers/woman_pic_2.png', 'images/user/FixtureLoadUsers/woman_pic_3.jpg', 'images/user/FixtureLoadUsers/woman_pic_4.jpg', 'images/user/FixtureLoadUsers/woman_pic_5.jpg'];
-        $womanPicture = $womenPictures[array_rand($womenPictures)];
         $menPictures = ['images/user/FixtureLoadUsers/man_pic_1.jpg', 'images/user/FixtureLoadUsers/man_pic_2.jpg', 'images/user/FixtureLoadUsers/man_pic_3.jpg', 'images/user/FixtureLoadUsers/man_pic_4.jpg', 'images/user/FixtureLoadUsers/man_pic_5.jpg'];
+        $coverPictures = ['images/user/FixtureLoadUsers/cover-pic-1.jpg', 'images/user/FixtureLoadUsers/cover-pic-2.jpg', 'images/user/FixtureLoadUsers/cover-pic-3.jpg', 'images/user/FixtureLoadUsers/cover-pic-4.jpg', 'images/user/FixtureLoadUsers/cover-pic-5.jpg', 'images/user/FixtureLoadUsers/cover-pic-6.jpg', 'images/user/FixtureLoadUsers/cover-pic-7.jpg', 'images/user/FixtureLoadUsers/cover-pic-8.jpg'];
         $womenOrMenPictures = array_merge($womenPictures, $menPictures);
 
         //setting admin user
@@ -47,6 +53,12 @@ class UserFixtures extends Fixture
         $picture->setProfilePicture(true);
         $picture->setUseAS("profilePicture");
         $picture->setDefaultPicture(true);
+        $coverPicture = new Picture();
+        $coverPicture->setName($coverPictures[array_rand($coverPictures)]);
+        $coverPicture->setUrl($coverPictures[array_rand($coverPictures)]);
+        $coverPicture->setCoverPicture(true);
+        $coverPicture->setUseAS("coverPicture");
+        $coverPicture->setDefaultPicture(true);
         $user->setName('Malo');
         $user->setLastname('root');
         $user->setRoles(['ROLE_ADMIN']);
@@ -56,12 +68,11 @@ class UserFixtures extends Fixture
         $user->setGender('man');
         $user->setConfirmed(true);
         $user->addPicture($picture);
+        $user->addPicture($coverPicture);
         $manager->persist($user);
         $password="Levirus35";
 
         $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
-
-
 
         //random users
         while($count-- > 0){
@@ -91,6 +102,12 @@ class UserFixtures extends Fixture
             $picture->setProfilePicture(true);
             $picture->setUseAS("profilePicture");
             $picture->setDefaultPicture(true);
+            $coverPicture = new Picture();
+            $coverPicture->setName($coverPictures[array_rand($coverPictures)]);
+            $coverPicture->setUrl($coverPictures[array_rand($coverPictures)]);
+            $coverPicture->setCoverPicture(true);
+            $coverPicture->setUseAS("coverPicture");
+            $coverPicture->setDefaultPicture(true);
             $user->setGender($gender);
             $user->setName($name);
             $user->setLastname($lastname);
@@ -103,12 +120,11 @@ class UserFixtures extends Fixture
             $date = mt_rand($start, $end);
             $user->setBirthDate(new \DateTime(date('Y-m-d', $date)));
             $user->addPicture($picture);
+            $user->addPicture($coverPicture);
             $manager->persist($user);
             $password="root";
             $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
         }
-
-
         $manager->flush();
     }
 }

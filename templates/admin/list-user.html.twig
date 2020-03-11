@@ -22,6 +22,8 @@
         <tr>
           <th class="th-sm" scope="col">#</th>
           <th class="th-sm" scope="col">Name</th>
+          <th class="th-sm" scope="col">Last name</th>
+          <th class="th-sm" scope="col">Gender</th>
           <th class="th-sm" scope="col">Email</th>
           <th class="th-sm" scope="col">Confirmed</th>
           <th class="th-sm" scope="col">birthdate</th>
@@ -35,6 +37,8 @@
             <tr>
                 <th scope="row">{{ count }}</th>
                 <td><a href="{{ path('profil', { 'id': user.id }) }}">{{ user.name }}</a></td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.gender }}</td>
                 <td>{{ user.mail }}</td>
                 <td>
                     {% if user.Confirmed is same as(true) %}
