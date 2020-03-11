@@ -167,7 +167,7 @@ class Picture
     {
         //actually deleting the file
 
-        if ($this->tempDefaultPicture !== null)
+        if ($this->tempDefaultPicture === null)
         {
             $filesystem = new Filesystem();
             if (!file_exists(realpath($this->tempUrl))){
