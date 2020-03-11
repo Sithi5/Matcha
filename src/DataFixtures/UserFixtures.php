@@ -30,22 +30,24 @@ class UserFixtures extends Fixture
         $count = 10;
         //array of names etc for random users
         $womenNames = ['apple', 'orange', 'citrus', 'Kimn', 'Mariana', 'Patty', 'Claudia' , 'Jelena' , 'Taria' ,'Honour', 'Lovelyn', 'Quanah', 'Petunia'];
-        $mansNames = ['Donnelly', 'Finley', 'Israel', 'Farnell', 'Celestino', 'Beecher', 'Aristides', 'Joaquin', 'Bailee', 'Rory','Washington','Babak', 'Digby'];
-        $womenOrMansNames = array_merge($womenNames, $mansNames);
+        $menNames = ['Donnelly', 'Finley', 'Israel', 'Farnell', 'Celestino', 'Beecher', 'Aristides', 'Joaquin', 'Bailee', 'Rory','Washington','Babak', 'Digby'];
+        $womenOrMenNames = array_merge($womenNames, $menNames);
         $lastnames = ['Brown', 'Philips', 'Price', 'Bell', 'Rogers', 'Adams', 'Roberts', 'Jenkins', 'Lopez', 'Cox','Campbell','Peterson','Sanchez', 'Jones', 'Davis', 'Wood', 'Smith', 'Mitchell', 'Jenkins' ,'Foster', 'Butler', 'Ross'];
-        $genders = ['man', 'women', 'neither'];
+        $genders = ['man', 'woman', 'neither'];
         $womenPictures = ['images/user/FixtureLoadUsers/woman_pic_1.png', 'images/user/FixtureLoadUsers/woman_pic_2.png', 'images/user/FixtureLoadUsers/woman_pic_3.jpg', 'images/user/FixtureLoadUsers/woman_pic_4.jpg', 'images/user/FixtureLoadUsers/woman_pic_5.jpg'];
         $womanPicture = $womenPictures[array_rand($womenPictures)];
+        $menPictures = ['images/user/FixtureLoadUsers/man_pic_1.jpg', 'images/user/FixtureLoadUsers/man_pic_2.jpg', 'images/user/FixtureLoadUsers/man_pic_3.jpg', 'images/user/FixtureLoadUsers/man_pic_4.jpg', 'images/user/FixtureLoadUsers/man_pic_5.jpg'];
+        $womenOrMenPictures = array_merge($womenPictures, $menPictures);
 
         //setting admin user
         $user = new User();
         $picture = new Picture();
-        $picture->setName($womanPicture);
-        $picture->setUrl($womanPicture);
+        $picture->setName($womenOrMenPictures[array_rand($womenOrMenPictures)]);
+        $picture->setUrl($womenOrMenPictures[array_rand($womenOrMenPictures)]);
         $picture->setProfilePicture(true);
         $picture->setUseAS("profilePicture");
         $picture->setDefaultPicture(true);
-        $user->setName('root');
+        $user->setName('Malo');
         $user->setLastname('root');
         $user->setRoles(['ROLE_ADMIN']);
         $user->setMail("fake@fake.com");
@@ -64,26 +66,28 @@ class UserFixtures extends Fixture
         //random users
         while($count-- > 0){
             $gender = $genders[array_rand($genders)];
-            $womanPicture = $womenPictures[array_rand($womenPictures)];
-            $manPicture = $womenPictures[array_rand($womenPictures)];
 
             //change name depending on gender
             if ($gender == 'man')
             {
-                $name = $mansNames[array_rand($mansNames)];
+                $name = $menNames[array_rand($menNames)];
+                $pictureUrl = $menPictures[array_rand($menPictures)];
+
             }
-            else if ($gender == 'women')
+            else if ($gender == 'woman')
             {
                 $name = $womenNames[array_rand($womenNames)];
+                $pictureUrl = $womenPictures[array_rand($womenPictures)];
             }
             else {
-                $name = $womenOrMansNames[array_rand($womenOrMansNames)];
+                $name = $womenOrMenNames[array_rand($womenOrMenNames)];
+                $pictureUrl = $womenOrMenPictures[array_rand($womenOrMenPictures)];
             }
             $lastname = $lastnames[array_rand($lastnames)];
             $user = new User();
             $picture = new Picture();
-            $picture->setName($womanPicture);
-            $picture->setUrl($womanPicture);
+            $picture->setName($pictureUrl);
+            $picture->setUrl($pictureUrl);
             $picture->setProfilePicture(true);
             $picture->setUseAS("profilePicture");
             $picture->setDefaultPicture(true);
