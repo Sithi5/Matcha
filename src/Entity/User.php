@@ -106,6 +106,11 @@ class User extends AbstractController implements UserInterface
 
     private $tempId;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $age;
+
     public function __construct()
     {
         $this->setCreationDate(New \Datetime('now'));
@@ -368,5 +373,17 @@ class User extends AbstractController implements UserInterface
         if (file_exists($targetDirectory)){
             $filesystem->remove([$targetDirectory]);
         }
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(int $age): self
+    {
+        $this->age = $age;
+
+        return $this;
     }
 }

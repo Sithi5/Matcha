@@ -18,7 +18,7 @@ use App\Entity\Picture;
 //form
 use App\Form\RegistrationFormType;
 use App\Security\LoginFormAuthenticator;
-
+use Symfony\Component\Validator\Constraints\Date;
 
 class RegistrationController extends AbstractController
 {
@@ -56,15 +56,28 @@ class RegistrationController extends AbstractController
             $date->modify('-1 minutes');
             $user->setResentMailRegisterTime($date);
             $user->setResentMailPasswordTime($date);
+            //set the age
+            $date = $user->getBirthdate();
+            $now = new \DateTime();
+            $age = $now->diff($date);
+            $user->setAge($age->y);
+
             $user->setConfirmed(false);
 
             //setting default profile pic
             $picture = new Picture();
             $picture->setName('default-user.png');
-            $picture->setUrl('images\user\default-user.png');
+            $picture->setUrl('images/user/default-user.png');
             $picture->setProfilePicture(true);
-		    $picture->setUseAS("profilePicture");
+            $picture->setUseAS("profilePicture");
+            $coverPicture = new Picture();
+            $coverPicture->setName('images/user/default-cover.jpg');
+            $coverPicture->setUrl('images/user/default-cover.jpg');
+            $coverPicture->setCoverPicture(true);
+            $coverPicture->setUseAS("coverPicture");
+            $coverPicture->setDefaultPicture(true);
             $user->addPicture($picture);
+            $user->addPicture($coverPicture);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

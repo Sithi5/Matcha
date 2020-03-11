@@ -1,5 +1,6 @@
 .profil-head {
     color: #fff;
+    background-color: black;
 }
 
 .profil-background-cover-photo {
@@ -10,6 +11,20 @@
 }
 
 .profil-profil-picture {
+    cursor: pointer;
+    margin-left: 6vw;
     width: 23vw;
     height: 23vw;
+    z-index: 0;
+}
+
+.col-profil-profil {
+    padding-right: 1vw;
+    flex-grow: 0;
+}
+
+.profil-profil-name {
+    padding-top: 1vw;
+    font-size: 2.3rem;
+    color: white;
 }

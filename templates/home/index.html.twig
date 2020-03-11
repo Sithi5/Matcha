@@ -41,7 +41,5 @@
 
   </header>
 
-  {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') or not navUserConfirmed %}
-    {{ include('home/index-not-confirmed.html.twig') }}
-  {% endif %}
+  {{ include('home/index-not-confirmed.html.twig') }}
 {% endblock %}

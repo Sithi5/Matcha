@@ -65,6 +65,13 @@ class UserFixtures extends Fixture
         $user->setMail("fake@fake.com");
         $user->setUsername($user->getMail());
         $user->setBirthDate(new \DateTime('1995-12-21'));
+
+        //set the age
+        $date = $user->getBirthdate();
+        $now = new \DateTime('now');
+        $age = $now->diff($date);
+        $user->setAge($age->y);
+
         $user->setGender('man');
         $user->setConfirmed(true);
         $user->addPicture($picture);
@@ -108,6 +115,7 @@ class UserFixtures extends Fixture
             $coverPicture->setCoverPicture(true);
             $coverPicture->setUseAS("coverPicture");
             $coverPicture->setDefaultPicture(true);
+
             $user->setGender($gender);
             $user->setName($name);
             $user->setLastname($lastname);
@@ -119,6 +127,13 @@ class UserFixtures extends Fixture
             $end = strtotime("-18 year");
             $date = mt_rand($start, $end);
             $user->setBirthDate(new \DateTime(date('Y-m-d', $date)));
+
+            //set the age
+            $date = $user->getBirthdate();
+            $now = new \DateTime('now');
+            $age = $now->diff($date);
+            $user->setAge($age->y);
+
             $user->addPicture($picture);
             $user->addPicture($coverPicture);
             $manager->persist($user);

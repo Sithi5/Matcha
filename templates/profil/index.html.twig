@@ -3,16 +3,24 @@
 {% block body %}
     {{ parent() }}
 <header class="profil-head" id="index-masthead">
-    <img class="profil-background-cover-photo" src="{{ asset(profilUserCoverPictureUrl) }}">
+    <img class="profil-background-cover-photo"  src="{{ asset(profilUserCoverPictureUrl) }}">
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col">
-                <img class="profil-profil-picture" src="{{ asset(profilUserProfilPictureUrl) }}">
+            <div class="col col-profil-profil">
+                <img class="profil-profil-picture" onclick="window.location='{{ path('app_edituser_profilpicture') }}'" src="{{ asset(profilUserProfilPictureUrl) }}">
+            </div>
+            <div class="col col-profil-profil">
+                <p class="profil-profil-name">
+                    {{ profilUser.name }}
+                </p>
+                <span>
+                    Age {{ profilUser.age }}
+                </span>
             </div>
         </div>
-
     </div>
 
 </header>
+
 {% endblock %}

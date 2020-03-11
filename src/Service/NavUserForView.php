@@ -28,6 +28,7 @@ class NavUserForView extends AbstractController
 			'navUserName' => $navUser->getName(),
 			'navUserConfirmed' => $navUser->getConfirmed(),
 			'navUserProfilePictureUrl' => $navUserProfilePictureUrl,
+			'navUser' => $navUser,
 		];
 		return $navUserInfo;
 	}

@@ -1,6 +1,26 @@
-.panel-body .btn:not(.btn-block) {
-    width: 120px;
-    margin-bottom: 10px;
+.admin-container {
+    width: 100vw;
+    height: 50vw;
+}
+
+.admin-row {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.admin-col {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    flex: 0 0 100%;
+}
+
+.admin-panel {
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .panel-primary {
@@ -9,9 +29,28 @@
 }
 
 .panel-heading {
+    position: relative;
+    width: 100%;
+    height: 10%;
     background-color: #17a2b8;
+}
+
+.panel-body {
+    position: relative;
+    width: 100%;
+    height: 90%;
+}
+
+.admin-btn {
+    margin-top: 10px;
+    width: 15vw;
 }
 
 .panel-title {
     color: white;
+}
+
+.admin-panel-btn {
+    position: absolute;
+    bottom: 10px;
 }

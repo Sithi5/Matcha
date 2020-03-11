@@ -162,9 +162,9 @@ class EditUserController extends AbstractController
     }
 
     /**
-     * @Route("/edituser/profilepicture", name="app_edituser_profilepicture")
+     * @Route("/edituser/profilpicture", name="app_edituser_profilpicture")
      */
-    public function profilePicture(Request $request): Response
+    public function profilPicture(Request $request): Response
     {
         if (!($navUser = $this->getUser()) || !$navUser->getConfirmed())
         {
