@@ -4,6 +4,14 @@
     margin: 0;
 }
 
+.table-bordered {
+    position: relative;
+}
+
+.table-user-body {
+    position: relative;
+}
+
 .col-admin-user {
-    width: 2000px;
+    width: 100vw;
 }
