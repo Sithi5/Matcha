@@ -29,8 +29,8 @@
 .admin-btn {
     margin-top: 2px;
     margin-bottom: 10px;
-    width: 15vw;
-    font-size: 2vw;
+    width: 40vw;
+    font-size: 3vw;
 }
 
 .panel-title {
@@ -41,4 +41,12 @@
     margin-right: 15px;
     margin-left: 15px;
     margin-top: 15px;
+}
+
+@media (min-width: 768px) {
+    .admin-btn {
+        margin-top: 2px;
+        margin-bottom: 15px;
+        font-size: 2vw;
+    }
 }
