@@ -66,6 +66,8 @@ class UserFixtures extends Fixture
         $user->setUsername($user->getMail());
         $user->setBirthDate(new \DateTime('1995-12-21'));
 
+
+
         //set the age
         $date = $user->getBirthdate();
         $now = new \DateTime('now');
@@ -76,6 +78,17 @@ class UserFixtures extends Fixture
         $user->setConfirmed(true);
         $user->addPicture($picture);
         $user->addPicture($coverPicture);
+
+        //adding pictures to admin user
+        for($i = 30; $i > 0; $i--)
+        {
+            $addingpicture = new Picture();
+            $addingpicture->setName($womenOrMenPictures[array_rand($womenOrMenPictures)]);
+            $addingpicture->setUrl($womenOrMenPictures[array_rand($womenOrMenPictures)]);
+            $addingpicture->setDefaultPicture(true);
+            $user->addPicture($addingpicture);
+        }
+
         $manager->persist($user);
         $password="Levirus35";
 
@@ -123,7 +136,7 @@ class UserFixtures extends Fixture
             $user->setUsername($user->getMail());
             $user->setConfirmed((bool)random_int(0, 1));
 
-            $start = strtotime("-100 year");
+            $start = strtotime("-40 year");
             $end = strtotime("-18 year");
             $date = mt_rand($start, $end);
             $user->setBirthDate(new \DateTime(date('Y-m-d', $date)));

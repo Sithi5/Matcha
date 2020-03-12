@@ -6,7 +6,7 @@
 			<div class="card-body text-center">
 				<div class="header-card-div">
 					<ul class="menu-user">
-						<img src="{{ asset(navUserProfilePictureUrl) }}" class="img-card-body" type="button" onclick="window.location='{{ path('profil', { 'id': navUser.id }) }}'">
+						<img src="{{ asset(navUserProfilePictureUrl) }}" class="img-card-body" type="button" onclick="window.location='{{ path('profil', { 'id': navUserId }) }}'">
 					</ul>
 					<ul class="menu-user">
 			    		<p class="card-title text-user-card-title">{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %} {{navUserName}}{% endif %}</p>
