@@ -1,7 +1,3 @@
-.admin-container {}
-
-.admin-row {}
-
 .admin-col {
     flex: 0 0 100%;
     max-width: 100%;
@@ -11,8 +7,6 @@
     flex: 0 0 50%;
     max-width: 50%;
 }
-
-.admin-panel {}
 
 .panel-primary {
     background-color: rgb(83, 70, 87);
@@ -33,9 +27,10 @@
 }
 
 .admin-btn {
-    margin-top: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     width: 15vw;
-    font-size: 1vw;
+    font-size: 2vw;
 }
 
 .panel-title {
