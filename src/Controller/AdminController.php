@@ -38,33 +38,22 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/user/{page}", name="admin_user", defaults={"page"=0})
+     * @Route("/admin/user/", name="admin_user")
      */
-    public function user(Request $request, int $page = 0)
+    public function user(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
-        $page < 0 ? $page = 0 : 0;
-        $limit = 50;
-        $offset = $page * $limit;
 
         if (!empty($request) && !empty($request->request->get('id')))
         {
             $this->removeUser($request->request->get('id'));
         }
         $repository = $this->getDoctrine()->getRepository(User::class);
-        $users = $repository->findAllLimitOffset($limit, $offset);
-        if (!$users)
-        {
-            $page--;
-            $offset = $page * $limit;
-            $users = $repository->findAllLimitOffset($limit, $offset);
-        }
+        $users = $repository->findAll();
 
         $navUser = $this->getUser();
         return $this->render('admin/list-user.html.twig', array_merge([
             "users" => $users,
-            "page" => $page,
             ], $this->navUserForView->OutputNavUserInfo($navUser))
         );
     }

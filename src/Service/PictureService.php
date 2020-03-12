@@ -83,6 +83,19 @@ class PictureService extends AbstractController
 		return $coverPictureUrl;
 	}
 
+	public function getAllPicturesExceptCoverAndProfil(user $user)
+	{
+		$getPictures = $user->getPictures();
+		$pictures = [];
+		foreach ($getPictures as $picture){
+			if (!$picture->getProfilePicture() && !$picture->getCoverPicture())
+			{
+				$pictures[] = $picture;
+			}
+		}
+		return $pictures;
+	}
+
 	public function setNewProfilePicture(user $user, picture $newProfilePicture, EntityManager $em)
 	{
 		foreach ($user->getPictures() as $picture)

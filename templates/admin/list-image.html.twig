@@ -6,9 +6,9 @@
 
 	{{ parent()}}
 	<!-- The Modal -->
-	<div id="modal-image" class="modal modal-image">
+	<div id="modal-image" class="modal modal-image" aria-hidden="true">
 		<!-- Modal Content (The Image) -->
-  		<img class="modal-image-content" id="profil-image">
+  		<img class="modal-image-content" id="image-modal-content">
 	</div>
 	<!-- Page Content -->
 	<div class="container">
@@ -29,7 +29,7 @@
 
         					// Get the image and insert it inside the modal - use its "alt" text as a caption
         					var img = document.getElementById("modal-image-image-{{ picture.id  }}");
-        					var modalImg = document.getElementById("profil-image");
+        					var modalImg = document.getElementById("image-modal-content");
         					img.onclick = function() {
         					    modal.style.display = "block";
         					    modalImg.src = this.src;

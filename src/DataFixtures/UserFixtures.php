@@ -79,7 +79,7 @@ class UserFixtures extends Fixture
         $user->addPicture($picture);
         $user->addPicture($coverPicture);
 
-        //adding pictures to admin user
+        //adding extra pictures to user galery
         for($i = 30; $i > 0; $i--)
         {
             $addingpicture = new Picture();
@@ -114,14 +114,22 @@ class UserFixtures extends Fixture
                 $name = $womenOrMenNames[array_rand($womenOrMenNames)];
                 $pictureUrl = $womenOrMenPictures[array_rand($womenOrMenPictures)];
             }
-            $lastname = $lastnames[array_rand($lastnames)];
             $user = new User();
             $picture = new Picture();
+            $lastname = $lastnames[array_rand($lastnames)];
             $picture->setName($pictureUrl);
             $picture->setUrl($pictureUrl);
             $picture->setProfilePicture(true);
             $picture->setUseAS("profilePicture");
             $picture->setDefaultPicture(true);
+            for($i = 30; $i > 0; $i--)
+            {
+                $addingpicture = new Picture();
+                $addingpicture->setUrl($pictureUrl);
+                $addingpicture->setName($pictureUrl);
+                $addingpicture->setDefaultPicture(true);
+                $user->addPicture($addingpicture);
+            }
             $coverPicture = new Picture();
             $coverPicture->setName($coverPictures[array_rand($coverPictures)]);
             $coverPicture->setUrl($coverPictures[array_rand($coverPictures)]);

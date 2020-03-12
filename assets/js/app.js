@@ -25,6 +25,7 @@ require('../css/admin-index.css');
 require('../css/admin-user.css');
 require('../css/profil.css');
 require('../css/modal-image.css');
+require('../css/list-image.css');
 
 //my personnal js
 require('./register.js')

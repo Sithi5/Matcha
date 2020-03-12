@@ -1,0 +1,11 @@
+.img-fluid {
+    width: 200px;
+    height: 200px;
+}
+
+@media (min-width: 600px) {
+    .img-fluid {
+        width: 400px;
+        height: 300px;
+    }
+}
