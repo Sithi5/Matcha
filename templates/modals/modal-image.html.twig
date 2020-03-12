@@ -1,0 +1,13 @@
+<!-- The Modal -->
+<div id="modal-image" class="modal modal-image">
+
+  <!-- Modal Content (The Image) -->
+	{% if profilUser.id is same as (navUser.id) %}
+	    <img class="modal-image-content cursor-pointer" id="profil-image" onclick="window.location='{{ path('app_edituser_profilpicture') }}'">
+	{% else %}
+  		<img class="modal-image-content" id="profil-image">
+	{% endif %}
+
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>

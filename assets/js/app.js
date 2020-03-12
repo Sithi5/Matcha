@@ -24,9 +24,11 @@ require('../css/social-media-icons.css');
 require('../css/admin-index.css');
 require('../css/admin-user.css');
 require('../css/profil.css');
+require('../css/modal-image.css');
 
 //my personnal js
 require('./register.js')
 require('./login.js')
 require('./labelFloat.js')
 require('./adminUser.js')
+require('./modalImage.js')

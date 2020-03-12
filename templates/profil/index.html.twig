@@ -8,7 +8,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col col-profil-profil">
-                <img class="profil-profil-picture" onclick="window.location='{{ path('app_edituser_profilpicture') }}'" src="{{ asset(profilUserProfilPictureUrl) }}">
+                <img id="modal-image-image" class="profil-profil-picture" src="{{ asset(profilUserProfilPictureUrl) }}">
+                {{ include('modals/modal-image.html.twig') }}
             </div>
             <div class="col col-profil-profil">
                 <p class="profil-profil-name">
