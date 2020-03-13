@@ -102,13 +102,13 @@ class PictureService extends AbstractController
         {
 			if ($picture->getProfilePicture() === true)
 			{
-				$this->removePicture($user, $picture, $em);
+				$picture->setProfilePicture(false);
+				$picture->setUseAS(null);
 			}
 		}
 		$newProfilePicture->setProfilePicture(true);
 		$newProfilePicture->setUseAS("profilePicture");
-		$user->addPicture($newProfilePicture);
-		$em->persist($user);
+		$em->persist($newProfilePicture);
 		$em->flush();
 	}
 
@@ -116,6 +116,13 @@ class PictureService extends AbstractController
 	{
 		$user->removePicture($picture);
 		$em->remove($picture);
+		$em->persist($user);
+		$em->flush();
+	}
+
+	public function addNewPicture(user $user, picture $picture, EntityManager $em)
+	{
+		$user->addPicture($picture);
 		$em->persist($user);
 		$em->flush();
 	}

@@ -2,10 +2,11 @@
 <div id="modal-image-profil" class="modal modal-image">
 
   <!-- Modal Content (The Image) -->
-	{% if profilUser.id is same as (navUser.id) %}
-	    <img class="modal-image-content cursor-pointer" id="profil-image" onclick="window.location='{{ path('app_edituser_profilpicture') }}'">
-	{% else %}
   		<img class="modal-image-content" id="profil-image">
-	{% endif %}
-
+			<input type="hidden" name="postPictureId">
+			<button id="button-modal-image" style="display: none;" class="btn btn-primary modal-image-button" onclick="setProfilPic()" value='profil'>Set new profil picture</button>
 </div>
+
+<script>
+
+</script>

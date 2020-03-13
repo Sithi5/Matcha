@@ -13,6 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 //entity
 use App\Entity\User;
@@ -162,19 +163,48 @@ class EditUserController extends AbstractController
     }
 
     /**
-     * @Route("/edituser/profilpicture", name="app_edituser_profilpicture")
+     * @Route("/edituser/profilpicture/{id}", name="app_edituser_profilpicture")
      */
-    public function profilPicture(Request $request): Response
+    public function profilPicture(Request $request, $id): Response
+    {
+        if (!($navUser = $this->getUser()) || !$navUser->getConfirmed())
+        {
+            $this->addFlash('error', 'You need to be logged in and confirmed to see this page.');
+            return new JsonResponse(['data' => 'go_home']);
+        }
+        $id = (int) $id;
+
+        $em = $this->getDoctrine()->getManager();
+        $picture = $em->getRepository(Picture::class)->findOneBy(['id' => $id]);
+        if (!$picture)
+        {
+            $this->addFlash('error', 'No picture found.');
+            return new JsonResponse(['data' => 'error']);
+        }
+
+        $this->pictureService->setNewProfilePicture($navUser, $picture, $em);
+        $this->addFlash('notice', 'Your profil picture is updated!');
+
+        if ($request->isXmlHttpRequest())
+        {
+            return new JsonResponse(['data' => 'success']);
+        }
+    }
+
+    /**
+    * @Route("/edituser/addpicture", name="app_edituser_addpicture")
+    */
+    public function addPicture(Request $request): Response
     {
         if (!($navUser = $this->getUser()) || !$navUser->getConfirmed())
         {
             $this->addFlash('error', 'You need to be logged in and confirmed to see this page.');
             return $this->redirectToRoute('home');
         }
-
         $picture = new Picture();
         $pictureService = $this->pictureService;
         $picture->setUser($navUser);
+
         $form = $this->createFormBuilder()->getForm();
         $form->handleRequest($request);
 
@@ -195,31 +225,12 @@ class EditUserController extends AbstractController
             $picture->setName($fileName);
             $picture->setUrl($targetDirectory . $fileName);
             $em = $this->getDoctrine()->getManager();
-            $pictureService->setNewProfilePicture($navUser, $picture, $em);
-            $this->addFlash('notice', 'Your profil picture is updated!');
+            $pictureService->addNewPicture($navUser, $picture, $em);
+            $this->addFlash('notice', 'Your picture is uploaded!');
         }
-
-        return $this->render('edit_user/edit_user_profil_picture.html.twig', array_merge([
+        return $this->render('edit_user/edit_user_add_picture.html.twig', array_merge([
             'form' => $form->createView(),
         ], $this->navUserForView->OutputNavUserInfo($navUser))
         );
-    }
-
-    /**
-    * @Route("/edituser/addpicture", name="app_edituser_addpicture")
-    */
-    public function addPicture(Request $request): Response
-    {
-        if (!($navUser = $this->getUser()) || !$navUser->getConfirmed())
-        {
-            $this->addFlash('error', 'You need to be logged in and confirmed to see this page.');
-            return $this->redirectToRoute('home');
-        }
-        $navUserProfilePictureUrl = $this->pictureService->getProfilePictureUrl($navUser);
-        return $this->render('edit_user/edit_user_profile_picture.html.twig', [
-            'navUserName' => $navUser->getName(),
-            'navUserConfirmed' => $navUser->getConfirmed(),
-            'navUserProfilePictureUrl' => $navUserProfilePictureUrl,
-        ]);
     }
 }

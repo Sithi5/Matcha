@@ -34,12 +34,15 @@ class ProfilController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        $form = $this->createFormBuilder()->getForm();
+
         $repository = $this->getDoctrine()->getRepository(User::class);
         $profilUser = $repository->findOneBy(array('id' => $id));
         $profilUserProfilPictureUrl = $this->pictureService->getProfilePictureUrl($profilUser);
         $profilUserCoverPictureUrl = $this->pictureService->getCoverPictureUrl($profilUser);
         $profilUserOthersPictures = $this->pictureService->getAllPicturesExceptCoverAndProfil($profilUser);
         return $this->render('profil/index.html.twig', array_merge([
+            'form' => $form->createView(),
             'profilUser' => $profilUser,
             'profilUserProfilPictureUrl' => $profilUserProfilPictureUrl,
             'profilUserCoverPictureUrl' => $profilUserCoverPictureUrl,
