@@ -19,6 +19,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "dropzone": "^5.7.0",
         "jquery-dropdown-datepicker": "^1.3.0",
         "webpack-jquery-ui": "^2.0.1"
     }

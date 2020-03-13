@@ -106,6 +106,8 @@ class User extends AbstractController implements UserInterface
 
     private $tempId;
 
+    private $lastRequestSend;
+
     /**
      * @ORM\Column(type="integer")
      */
@@ -306,6 +308,18 @@ class User extends AbstractController implements UserInterface
     public function setResentMailRegisterTime(?\DateTimeInterface $resentMailRegisterTime): self
     {
         $this->resentMailRegisterTime = $resentMailRegisterTime;
+
+        return $this;
+    }
+
+    public function getLastRequestSend(): ?\DateTimeInterface
+    {
+        return $this->lastRequestSend;
+    }
+
+    public function setLastRequestSend(?\DateTimeInterface $lastRequestSend): self
+    {
+        $this->lastRequestSend = $lastRequestSend;
 
         return $this;
     }

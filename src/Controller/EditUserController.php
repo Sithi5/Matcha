@@ -175,12 +175,20 @@ class EditUserController extends AbstractController
         $picture = new Picture();
         $pictureService = $this->pictureService;
         $picture->setUser($navUser);
-        $form = $this->createForm(ProfilePictureType::class, $picture);
+        $form = $this->createFormBuilder()->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $file = $request->files->get('file');
+            if (!$file)
+            {
+                $this->addFlash('error', 'You need to send a valid file.');
+                return $this->render('edit_user/edit_user_profil_picture.html.twig', array_merge([
+                    'form' => $form->createView(),
+                ], $this->navUserForView->OutputNavUserInfo($navUser))
+                );
+            }
             $targetDirectory = "images/user/".md5($navUser->getId()).'/';
-            $file = $form->get('file')->getData();
             $fileUploader = new FileUploader($targetDirectory);
             $fileName = $fileUploader->upload($file);
 
@@ -188,10 +196,10 @@ class EditUserController extends AbstractController
             $picture->setUrl($targetDirectory . $fileName);
             $em = $this->getDoctrine()->getManager();
             $pictureService->setNewProfilePicture($navUser, $picture, $em);
+            $this->addFlash('notice', 'Your profil picture is updated!');
         }
 
-
-        return $this->render('edit_user/edit_user_profile_picture.html.twig', array_merge([
+        return $this->render('edit_user/edit_user_profil_picture.html.twig', array_merge([
             'form' => $form->createView(),
         ], $this->navUserForView->OutputNavUserInfo($navUser))
         );

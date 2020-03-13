@@ -20,7 +20,7 @@ class ProfilePictureType extends AbstractType
     {
         $builder
             ->add('file', FileType::class, [
-                "label" => "upload your profile picture",
+                'attr' => ['class' => 'file-upload'],
                 "mapped" => false,
                 "required" => true,
                 'constraints' => [
@@ -32,7 +32,6 @@ class ProfilePictureType extends AbstractType
                         "mimeTypesMessage" => "Your file {{ file }} is not an image."
                     ]),
                 ]
-
             ])
             ->add('submit', SubmitType::class,[
                 'attr' => [
