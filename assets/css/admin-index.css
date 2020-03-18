@@ -47,6 +47,7 @@
     .admin-btn {
         margin-top: 2px;
         margin-bottom: 15px;
+        width: 20vw;
         font-size: 2vw;
     }
 }
