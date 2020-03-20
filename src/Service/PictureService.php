@@ -83,7 +83,7 @@ class PictureService extends AbstractController
 		return $coverPictureUrl;
 	}
 
-	public function getAllPicturesExceptCoverAndProfil(user $user)
+	public function getAllPicturesExceptCoverAndProfilByDate(user $user)
 	{
 		$getPictures = $user->getPictures();
 		$pictures = [];
@@ -93,6 +93,9 @@ class PictureService extends AbstractController
 				$pictures[] = $picture;
 			}
 		}
+		usort($pictures, function($a, $b) {
+			return ($b->getId() - $a->getId());
+		});
 		return $pictures;
 	}
 
