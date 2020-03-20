@@ -5,6 +5,9 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+//entity
+use App\Entity\User;
+
 //service
 use App\Service\PictureService;
 use App\Service\NavUserForView;
@@ -31,7 +34,12 @@ class ConfirmedHomeController extends AbstractController
             $this->addFlash('error', 'You need to be logged in and have a confirmed account to see this page.');
             return $this->redirectToRoute('home');
         }
-
-        return $this->render('confirmed_home/index.html.twig', $this->navUserForView->OutputNavUserInfo($navUser));
+        $repository = $this->getDoctrine()->getRepository(User::class);
+        $users = $repository->findAll();
+        return $this->render('confirmed_home/index.html.twig', array_merge([
+                'users' => $users,
+            ]
+            , $this->navUserForView->OutputNavUserInfo($navUser))
+        );
     }
 }

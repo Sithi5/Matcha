@@ -11,6 +11,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Filesystem\Filesystem;
 
+//service
+use App\Service\PictureService;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"mail"}, message="There is already an account with this e-mail address")
@@ -113,10 +116,13 @@ class User extends AbstractController implements UserInterface
      */
     private $age;
 
+    private $pictureService;
+
     public function __construct()
     {
         $this->setCreationDate(New \Datetime('now'));
         $this->pictures = new ArrayCollection();
+        $this->pictureService = new PictureService();
     }
 
     public function getId(): ?int
@@ -400,4 +406,21 @@ class User extends AbstractController implements UserInterface
 
         return $this;
     }
+
+
+    public function getProfilePicture()
+	{
+		foreach ($this->getPictures() as $picture)
+        {
+            if ($picture->getProfilePicture() === true)
+            {
+                $profilPicture = $picture;
+            }
+		}
+		if (!isset($profilPicture))
+		{
+            throw new \RuntimeException('Could not find the picture.');
+		}
+		return $profilPicture;
+	}
 }

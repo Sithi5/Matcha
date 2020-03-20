@@ -32,20 +32,22 @@
 
 	{#uploading file part #}
 	{% if profilUser.id is same as (navUserId) %}
-    	<input type="button" id="button-display-upload-files" class="btn btn-primary" value='Upload new pictures'>
-  		<div class="container register-form" id="container-upload-files" style="display: none;">
-    	{# content #}
-    		<div class="text-center" style="color: #757575;">
-    			<div class="card-register">
-    		    	<div class="card-body px-lg-5 pt-0">
-    		    		<form enctype="multipart/form-data" class="dropzone" action="{{ path('app_edituser_addpicture') }}" method="post" name="acme_dropzone_form" id="dropzoneForm">
-    		        		{{ form_widget(form) }}
-    		        			<div id="preview"></div>
-    		        		{{ form_end(form) }}
-    		        	<input type="button" id="button-upload-files" class="btn btn-primary" value='Upload files'>
-    		    	</div>
+		<div class="text-center" style="margin-top: 1vw;">
+    		<input type="button" id="button-display-upload-files" class="btn btn-primary" value='Upload new pictures'>
+  			<div class="container register-form" id="container-upload-files" style="display: none;">
+    		{# content #}
+    			<div class="text-center" style="color: #757575;">
+    				<div class="card-register">
+    			    	<div class="card-body px-lg-5 pt-0">
+    			    		<form enctype="multipart/form-data" class="dropzone" action="{{ path('app_edituser_addpicture') }}" method="post" name="acme_dropzone_form" id="dropzoneForm">
+    			        		{{ form_widget(form) }}
+    			        			<div id="preview"></div>
+    			        		{{ form_end(form) }}
+    			        	<input type="button" id="button-upload-files" class="btn btn-primary" value='Upload files'>
+    			    	</div>
+    				</div>
     			</div>
-    		</div>
+			</div>
 		</div>
 	{% endif %}
 
@@ -129,6 +131,7 @@
 
 	<script>
 
+	{% if profilUser.id is same as (navUserId) %}
 	    // Get the modal profil
 	    var modal = document.getElementById("modal-image-profil");
 	    // Get the image and insert it inside the modal - use its "alt" text as a caption
@@ -148,6 +151,23 @@
 	            modal.style.display = "none";
 	        }
 	    }
+	{% else %}
+		// Get the modal profil
+	    var modal = document.getElementById("modal-image-profil");
+	    // Get the image and insert it inside the modal - use its "alt" text as a caption
+	    var img = document.getElementById("modal-image-image");
+	    var modalImg = document.getElementById("profil-image");
+	    img.onclick = function() {
+	        modal.style.display = "block";
+	        modalImg.src = this.src;
+	    }
+	    // When the user clicks anywhere outside of the modal, close it
+	    window.onclick = function(event) {
+	        if (event.target == modal) {
+	            modal.style.display = "none";
+	        }
+	    }
+	{% endif %}
 	</script>
 
 {% endblock %}
@@ -187,9 +207,8 @@
     			location.reload();
     		});
 		</script>
-	{% endif %}
 	<script>
-				function setProfilPic()
+		function setProfilPic()
 		{
 			button = document.getElementById("button-modal-image");
 			if (button.value !== "profil")
@@ -219,4 +238,5 @@
 			}
 		}
 	</script>
+	{% endif %}
 {% endblock javascripts %}
